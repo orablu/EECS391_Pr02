@@ -1,0 +1,6 @@
+.*
+!/.gitignore
+*.swp
+*.class
+bin/
+SEPIA_docs
