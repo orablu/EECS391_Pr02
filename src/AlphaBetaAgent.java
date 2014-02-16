@@ -88,4 +88,8 @@ public class AlphaBetaAgent extends Agent {
     public void loadPlayerData(InputStream is) {
         // this agent lacks learning and so has nothing to persist.
     }
+
+    //
+    // Alpha Beta Algorithms
+    //
 }
