@@ -2,5 +2,6 @@
 !/.gitignore
 *.swp
 *.class
+*.pdf
 bin/
 SEPIA_docs
