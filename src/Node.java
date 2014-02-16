@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Node {
+public abstract class Node {
     private List<Node> children;
 
     public Node() {
-        this.children = new ArrayList<Node>();
+        this.children = new ArrayList<>();
     }
 
     public Node getChild(int index) {
