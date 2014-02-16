@@ -1,11 +1,10 @@
 import java.util.List;
-import java.util.ArrayList;
 
 public abstract class AlphaBetaNode extends Node {
-    private State state;
-    private boolean isMaxNode;
+    protected boolean isMaxNode;
+    protected State state;
     private Node bestNode;
-    Integer weight;
+    private Integer weight;
 
     public AlphaBetaNode(State state, boolean isMaxNode) {
         super();
@@ -26,10 +25,6 @@ public abstract class AlphaBetaNode extends Node {
         return this.weight;
     }
 
-    public State getState() {
-        return this.state;
-    }
-
     private void setBestNode() {
         if (this.isMaxNode) {
             this.weight = this.bestNode.getWeight();
@@ -39,20 +34,36 @@ public abstract class AlphaBetaNode extends Node {
         this.bestNode = this.getMaxChild();
     }
 
-    // Populates this.possibleStates
-    private abstract List<State> generatePossibleStates();
-
     private void generateChildren(List<State> possible) {
-        // TODO: This is where the minimax happens.
+        int alpha = Integer.MIN_VALUE;
+        int beta = Integer.MAX_VALUE;
+        while (!possible.isEmpty()) {
+            // Create the node.
+            State state = possible.remove(0);
+            Node node = getChildFromState(state);
+            this.children.add(node);
+
+            // Alpha Beta pruning.
+            int weight = node.getWeight();
+            if (this.isMaxNode) {
+                if (weight < alpha) {
+                    break;
+                } else {
+                    beta = Math.min(weight, beta);
+                }
+            } else {
+                if (weight > beta) {
+                    break;
+                } else {
+                    alpha = Math.max(weight, alpha);
+                }
+            }
+        }
     }
 
-    // Returns whether or not this node warrants a/b pruning.
-    private boolean addChildFromState(State state) {
-        // TODO: This is where a child node is created and analyzed.
-        return false;
-    }
+    // Populates this.possibleStates
+    protected abstract List<State> generatePossibleStates();
 
-    private void prune() {
-        // TODO: This prunes the tree if necessary
-    }
+    // Returns the created node.
+    protected abstract Node getChildFromState(State state);
 }

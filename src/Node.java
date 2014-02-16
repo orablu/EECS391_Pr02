@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Node {
-    private List<Node> children;
+    protected List<Node> children;
 
     public Node() {
         this.children = new ArrayList<>();
