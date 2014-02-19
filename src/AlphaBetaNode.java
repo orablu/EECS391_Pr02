@@ -1,12 +1,22 @@
 import java.util.List;
 
 public abstract class AlphaBetaNode extends Node {
+    private static int alpha, beta;
+    private static int maxDepth;
+
     protected boolean isMaxNode;
+    protected int depth;
     protected State state;
     private Node bestNode;
     private Integer weight;
 
-    public AlphaBetaNode(State state, boolean isMaxNode) {
+    public static List<Node> setupSearch(int depth) {
+        AlphaBetaNode.alpha = Integer.MIN_VALUE;
+        AlphaBetaNode.beta = Integer.MAX_VALUE;
+        AlphaBetaNode.maxDepth = depth;
+    }
+
+    public AlphaBetaNode(State state, int depth, boolean isMaxNode) {
         super();
         this.state = state;
         this.isMaxNode = isMaxNode;
@@ -14,29 +24,35 @@ public abstract class AlphaBetaNode extends Node {
         // Create the node, creating any children nodes and pruning as necessary.
         this.weight = Integer.MAX_VALUE;
         List<State> possible = this.generatePossibleStates();
-        this.generateChildren(possible);
-        this.setBestNode();
+        if (depth < AlphaBetaNode.maxDepth) {
+            this.generateChildren(possible);
+            this.setBestNode();
+        } else {
+            this.bestNode = null;
+        }
     }
 
     public int getWeight() {
         if (this.weight == null) {
-            this.weight = this.bestNode.getWeight();
+            if (this.bestNode != null) {
+                this.weight = this.bestNode.getWeight();
+            } else {
+                this.weight = this.isMaxNode ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            }
         }
         return this.weight;
     }
 
     private void setBestNode() {
         if (this.isMaxNode) {
-            this.weight = this.bestNode.getWeight();
+            this.bestNode = this.getMaxChild();
         } else {
             this.bestNode = this.getMinChild();
         }
-        this.bestNode = this.getMaxChild();
+        this.weight = this.bestNode.getWeight();
     }
 
     private void generateChildren(List<State> possible) {
-        int alpha = Integer.MIN_VALUE;
-        int beta = Integer.MAX_VALUE;
         while (!possible.isEmpty()) {
             // Create the node.
             State state = possible.remove(0);
@@ -61,9 +77,9 @@ public abstract class AlphaBetaNode extends Node {
         }
     }
 
-    // Populates this.possibleStates
+    // Populates this.possibleStates from this node's state.
     protected abstract List<State> generatePossibleStates();
 
-    // Returns the created node.
+    // Returns the node created from the given state.
     protected abstract Node getChildFromState(State state);
 }
