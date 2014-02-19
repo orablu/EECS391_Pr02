@@ -10,7 +10,7 @@ public abstract class AlphaBetaNode extends Node {
     private Node bestNode;
     private Integer weight;
 
-    public static List<Node> setupSearch(int depth) {
+    public static void setupSearch(int depth) {
         AlphaBetaNode.alpha = Integer.MIN_VALUE;
         AlphaBetaNode.beta = Integer.MAX_VALUE;
         AlphaBetaNode.maxDepth = depth;
