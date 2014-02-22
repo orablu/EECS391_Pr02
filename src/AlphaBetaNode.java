@@ -19,28 +19,25 @@ public abstract class AlphaBetaNode extends Node {
     public AlphaBetaNode(State state, int depth, boolean isMaxNode) {
         super();
         this.state = state;
+        this.depth = depth;
         this.isMaxNode = isMaxNode;
-
-        // Create the node, creating any children nodes and pruning as necessary.
-        this.weight = Integer.MAX_VALUE;
-        List<State> possible = this.generatePossibleStates();
-        if (depth < AlphaBetaNode.maxDepth) {
-            this.generateChildren(possible);
-            this.setBestNode();
-        } else {
-            this.bestNode = null;
-        }
     }
 
     public int getWeight() {
         if (this.weight == null) {
-            if (this.bestNode != null) {
-                this.weight = this.bestNode.getWeight();
-            } else {
-                this.weight = this.isMaxNode ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+            if (this.bestNode == null) {
+                this.searchForBestNode();
             }
+            this.weight = this.bestNode.getWeight();
         }
         return this.weight;
+    }
+
+    // Create the node, creating any children nodes and pruning as necessary.
+    private void searchForBestNode() {
+        List<State> possible = this.generatePossibleStates();
+        this.generateChildren(possible);
+        this.setBestNode();
     }
 
     private void setBestNode() {
@@ -49,14 +46,18 @@ public abstract class AlphaBetaNode extends Node {
         } else {
             this.bestNode = this.getMinChild();
         }
-        this.weight = this.bestNode.getWeight();
     }
 
     private void generateChildren(List<State> possible) {
         while (!possible.isEmpty()) {
             // Create the node.
             State state = possible.remove(0);
-            Node node = getChildFromState(state);
+            Node node;
+            if (depth < AlphaBetaNode.maxDepth) {
+                node = getChildFromState(state);
+            } else {
+                node = getLeafFromState(state);
+            }
             this.children.add(node);
 
             // Alpha Beta pruning.
@@ -80,6 +81,7 @@ public abstract class AlphaBetaNode extends Node {
     // Populates this.possibleStates from this node's state.
     protected abstract List<State> generatePossibleStates();
 
-    // Returns the node created from the given state.
-    protected abstract Node getChildFromState(State state);
+    // Returns the node/leaf created from the given state.
+    protected abstract AlphaBetaNode getChildFromState(State state);
+    protected abstract AlphaBetaLeaf getLeafFromState(State state);
 }
