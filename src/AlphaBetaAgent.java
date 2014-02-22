@@ -60,6 +60,12 @@ public class AlphaBetaAgent extends Agent {
     public Map<Integer, Action> initialStep(StateView newstate, History.HistoryView statehistory) {
         step = 0;
 
+        // Generate the search space and find the optimal path.
+        AlphaBetaNode.setupSearch(treeDepth);
+        State initialState = new State();
+        AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(initialState);
+        List<Node> bestPath = searchSpace.getBestPath(); 
+
         return middleStep(newstate, statehistory);
     }
 

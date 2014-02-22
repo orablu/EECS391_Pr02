@@ -1,5 +1,5 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class Node {
     protected List<Node> children;
@@ -43,4 +43,5 @@ public abstract class Node {
     }
 
     public abstract int getWeight();
+    public abstract List<Node> getBestPath();
 }

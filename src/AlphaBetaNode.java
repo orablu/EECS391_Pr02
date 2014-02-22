@@ -21,16 +21,27 @@ public abstract class AlphaBetaNode extends Node {
         this.state = state;
         this.depth = depth;
         this.isMaxNode = isMaxNode;
+        this.weight = null;
     }
 
     public int getWeight() {
         if (this.weight == null) {
-            if (this.bestNode == null) {
-                this.searchForBestNode();
-            }
-            this.weight = this.bestNode.getWeight();
+            this.weight = this.getBestNode().getWeight();
         }
         return this.weight;
+    }
+
+    public Node getBestNode() {
+        if (this.bestNode == null) {
+            this.setBestNode();
+        }
+        return this.bestNode;
+    }
+
+    public List<Node> getBestPath() {
+        List<Node> bestPath = this.getBestNode().getBestPath();
+        bestPath.add(0, this);
+        return bestPath;
     }
 
     // Create the node, creating any children nodes and pruning as necessary.
@@ -41,6 +52,7 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     private void setBestNode() {
+        this.searchForBestNode();
         if (this.isMaxNode) {
             this.bestNode = this.getMaxChild();
         } else {
