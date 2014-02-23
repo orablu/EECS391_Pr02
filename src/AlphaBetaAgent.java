@@ -66,15 +66,25 @@ public class AlphaBetaAgent extends Agent {
     public Map<Integer, Action> middleStep(StateView newState, History.HistoryView statehistory) {
         step++;
         
-        StateView currentState = newState;
+        StateView currentStateView = newState;
         Map<Integer,Action> builder = new HashMap<Integer,Action>();
         
-        List<Integer> myUnitIds = currentState.getUnitIds(playernum);
+        // Generate the search space and find the optimal path.
+        AlphaBetaNode.setupSearch(treeDepth);
+        State initialState = generateState(currentStateView);
+        AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(initialState);
+        List<Node> bestPath = searchSpace.getBestPath(); 
+		
+        return builder;
+    }
+
+	private State generateState(StateView currentStateView) {
+		List<Integer> unitIds = currentStateView.getAllUnitIds();
 		List<Integer> footmanIds = new ArrayList<Integer>();
 		List<Integer> archerIds = new ArrayList<Integer>();
-		for(int i = 0; i < myUnitIds.size(); i++) {
-			int id = myUnitIds.get(i);
-			UnitView unit = currentState.getUnit(id);
+		for (int i = 0; i < unitIds.size(); i++) {
+			int id = unitIds.get(i);
+			UnitView unit = currentStateView.getUnit(id);
 			String unitTypeName = unit.getTemplateView().getName();
 			System.out.println("Unit Type Name: " + unitTypeName);
 			if (unitTypeName.equalsIgnoreCase("Footman")) {
@@ -84,17 +94,19 @@ public class AlphaBetaAgent extends Agent {
 			}
 		}
 		
-		List<Integer> enemyUnitIds = currentState.getAllUnitIds();
-		enemyUnitIds.removeAll(myUnitIds);
+		List<UnitView> footmen = new ArrayList<UnitView>();
+		for (Integer id : footmanIds) {
+			footmen.add(currentStateView.getUnit(id));
+		}
 		
-        // Generate the search space and find the optimal path.
-        AlphaBetaNode.setupSearch(treeDepth);
-        State initialState = new State();
-        AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(initialState);
-        List<Node> bestPath = searchSpace.getBestPath(); 
+		List<UnitView> archers = new ArrayList<UnitView>();
+		for (Integer id : archerIds) {
+			archers.add(currentStateView.getUnit(id));
+		}
 		
-        return builder;
-    }
+        State initialState = new State(footmen, archers);
+		return initialState;
+	}
 
     @Override
     public void terminalStep(StateView newstate, History.HistoryView statehistory) {
