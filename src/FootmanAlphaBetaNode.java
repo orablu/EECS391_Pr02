@@ -1,5 +1,7 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 
@@ -19,10 +21,47 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         List<UnitView> footmen = state.getFootmen();
         List<UnitView> archers = state.getArchers();
         
+        Map<UnitView, List<Action>> actions = new HashMap<>();
+        
         for (UnitView footman : footmen) {
-        	if (targetAdjacent(footman.getXPosition(), footman.getYPosition())) {
-        		//states.add enum.attack
+        	actions.put(footman, new ArrayList<Action>());
+        	
+        	int x = footman.getXPosition();
+        	int y = footman.getYPosition();
+        	
+        	if (targetAdjacent(x, y)) {
+        		// TODO make this an attack action
+        		Action action = new Action();
+        		actions.get(footman).add(action);
         	}
+        	
+        	if (isValidPosition(x + 1, y)) {
+        		//TODO make this EAST action
+        		Action action = new Action();
+        		actions.get(footman).add(action);
+        	}
+        	
+        	if (isValidPosition(x, y + 1)) {
+        		//TODO make this NORTH action
+        		Action action = new Action();
+        		actions.get(footman).add(action);
+        	}
+        	
+        	if (isValidPosition(x - 1, y)) {
+        		//TODO make this WEST action
+        		Action action = new Action();
+        		actions.get(footman).add(action);
+        	}
+        	
+        	if (isValidPosition(x, y - 1)) {
+        		//TODO make this SOUTH action
+        		Action action = new Action();
+        		actions.get(footman).add(action);
+        	}
+        }
+        
+        for (Action fmanOneAction : actions.get(footmen.get(0))) {
+        	
         }
 
         return states;
