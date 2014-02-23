@@ -38,10 +38,10 @@ public abstract class AlphaBetaNode extends Node {
             this.setActions();
         }
 
-        if (action1.getType() != Action.Type.Undefined) {
+        if (action1.getType() != Action.Type.UNDEFINED) {
             actions.add(action1);
         }
-        if (action2.getType() != Action.Type.Undefined) {
+        if (action2.getType() != Action.Type.UNDEFINED) {
             actions.add(action2);
         }
         return actions;

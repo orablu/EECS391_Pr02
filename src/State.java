@@ -25,7 +25,19 @@ public class State {
         this.archers.addAll(archers);
     }
 
-    public List<Unit> getEntities() {
+    public State(State state) {
+		this();
+		
+		for (Unit footman : state.getFootmen()) {
+			footmen.add(new Unit(footman));
+		}
+		
+		for (Unit archer : state.getArchers()) {
+			archers.add(new Unit(archer));
+		}
+	}
+
+	public List<Unit> getEntities() {
         List<Unit> entities = new ArrayList<>();
         entities.addAll(this.getFootmen());
         entities.addAll(this.getArchers());
@@ -57,8 +69,64 @@ public class State {
         return sum;
     }
     
-    // TODO
     public State getNextState(Action action1, Action action2) {
-    	return null;
+    	State nextState = new State(this);
+    	nextState.applyAction(action1);
+    	nextState.applyAction(action2);
+    	return nextState;
     }
+
+	private void applyAction(Action action) {
+		Unit unit = action.getEntity();
+		
+		switch(action.getType()) {
+		case ATTACK:
+			int damage = unit.getTemplateView().getBasicAttack();
+			Unit stateUnit = getUnitFromID(unit.getId());
+			stateUnit.setHP(stateUnit.getHP() - damage);
+			break;
+		case MOVE:
+			moveUnit(action, unit);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void moveUnit(Action action, Unit unit) {
+		Unit stateUnit = getUnitFromID(unit.getId());
+		switch(action.getDirection()) {
+		case EAST:
+			stateUnit.setXPosition(stateUnit.getXPosition() + 1);
+			break;
+		case NORTH:
+			stateUnit.setYPosition(stateUnit.getYPosition() + 1);
+			break;
+		case SOUTH:
+			stateUnit.setYPosition(stateUnit.getYPosition() - 1);
+			break;
+		case WEST:
+			stateUnit.setXPosition(stateUnit.getXPosition() - 1);
+			break;
+		default:
+			System.out.println("Move action with no direction???");
+			break;
+		}
+	}
+	
+	private Unit getUnitFromID(int id) {
+		for (Unit footman : footmen) {
+			if (footman.getId() == id) {
+				return footman;
+			}
+		}
+		
+		for (Unit archer : archers) {
+			if (archer.getId() == id) {
+				return archer;
+			}
+		}
+		
+		return null;
+	}
 }
