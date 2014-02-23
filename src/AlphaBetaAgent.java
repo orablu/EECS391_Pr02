@@ -94,14 +94,14 @@ public class AlphaBetaAgent extends Agent {
 			}
 		}
 		
-		List<UnitView> footmen = new ArrayList<UnitView>();
+		List<Unit> footmen = new ArrayList<Unit>();
 		for (Integer id : footmanIds) {
-			footmen.add(currentStateView.getUnit(id));
+			footmen.add(new Unit(currentStateView.getUnit(id)));
 		}
 		
-		List<UnitView> archers = new ArrayList<UnitView>();
+		List<Unit> archers = new ArrayList<Unit>();
 		for (Integer id : archerIds) {
-			archers.add(currentStateView.getUnit(id));
+			archers.add(new Unit(currentStateView.getUnit(id)));
 		}
 		
         State initialState = new State(footmen, archers);
