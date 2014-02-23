@@ -24,7 +24,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
-        return null;
+        return new ArcherAlphaBetaLeaf(state);
     }
 
     private boolean isValidPosition(int x, int y) {

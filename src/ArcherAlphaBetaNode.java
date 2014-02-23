@@ -14,10 +14,10 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected AlphaBetaNode getChildFromState(State state) {
-        return null;
+        return new FootmanAlphaBetaNode(state, depth + 1);
     }
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
-        return null;
+        return new FootmanAlphaBetaLeaf(state);
     }
 }

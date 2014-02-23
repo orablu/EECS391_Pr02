@@ -1,10 +1,9 @@
-
 public class ArcherAlphaBetaLeaf extends AlphaBetaLeaf {
-    public ArcherAlphaBetaLeaf(State state, boolean isMaxNode) {
-        super(state, isMaxNode);
+    public ArcherAlphaBetaLeaf(State state) {
+        super(state, false);
     }
 
     protected int getWeightFromState() {
-        return 0;
+        return -state.getFootmenHealth();
     }
 }
