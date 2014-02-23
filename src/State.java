@@ -1,17 +1,22 @@
 public class State {
-    public static final int X = 0;
-    public static final int Y = 1;
-    public static final int HP = 2;
+    public static final int ID = 0;
+    public static final int X = 1;
+    public static final int Y = 2;
+    public static final int HP = 3;
 
     private int[][] footmen;
     private int[][] archers;
 
+    public static int[] createEntity(int id, int hp, int x, int y) {
+        return new int[] { id, x, y, hp };
+    }
+
     public State() {
         this(
-                new int[] { 0, 0, 0 },
-                new int[] { 0, 0, 0 },
-                new int[] { 0, 0, 0 },
-                new int[] { 0, 0, 0 });
+                new int[] { 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0 },
+                new int[] { 0, 0, 0, 0 });
     }
 
     public State(int[] footman1, int[] footman2, int[] archer1, int[] archer2) {
