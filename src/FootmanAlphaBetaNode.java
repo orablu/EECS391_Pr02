@@ -44,26 +44,38 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
             return false;
         }
 
-        return !targetAdjacent(x, y) && !allyAdjacent(x, y);
+        return !isAt(state.getEntities(), x, y);
     }
 
-    private boolean targetAdjacent(int x, int y) {
-        return isAdjacent(state.getArchers(), x, y);
+    private boolean targetAt(int x, int y) {
+        return isAt(state.getArchers(), x, y);
     }
 
-    private boolean allyAdjacent(int x, int y) {
-        return isAdjacent(state.getFootmen(), x, y);
+    private boolean allyAt(int x, int y) {
+        return isAt(state.getFootmen(), x, y);
     }
 
-    private boolean isAdjacent(List<UnitView> entities, int x, int y) {
+    private boolean isAt(List<UnitView> entities, int x, int y) {
         // Check if the coordinate is occupied.
         for (UnitView e : entities) {
             if (x == e.getXPosition() && y == e.getYPosition()) {
                 return false;
             }
         }
-
-        // The position is valid.
         return true;
+    }
+
+    private List<UnitView> targetsAdjacent(int x, int y) {
+        List<UnitView> targets = state.getArchers();
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                for (UnitView target : targets) {
+                    if (target.getXPosition() == i && target.getYPosition() == j) {
+                        targets.add(target);
+                    }
+                }
+            }
+        }
+        return targets;
     }
 }
