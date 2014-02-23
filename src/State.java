@@ -39,8 +39,4 @@ public class State {
     public int[] getArcher(int index) {
         return archers[index];
     }
-
-    public int getWeight() {
-        return this.getFootmenHealth() - this.getArcherHealth();
-    }
 }
