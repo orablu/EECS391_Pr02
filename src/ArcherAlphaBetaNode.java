@@ -94,9 +94,4 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         }
         return targets;
     }
-
-    protected void setActions() {
-        action1 = new Action();
-        action2 = new Action();
-    }
 }

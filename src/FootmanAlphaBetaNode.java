@@ -96,10 +96,4 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         }
         return targets;
     }
-
-	@Override
-	protected void setActions() {
-		// TODO Auto-generated method stub
-		
-	}
 }
