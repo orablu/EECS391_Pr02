@@ -33,11 +33,11 @@ import edu.cwru.sepia.environment.model.state.State.StateView;
 import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 
 /**
- * This agent will first collect gold to produce a peasant, then the two
- * peasants will collect gold and wood separately until reach goal.
- *
- * @author Feng
- *
+ * This agent will use minimax with alpha beta pruning to hunt down and kill the
+ * archers.
+ * 
+ * @author wkr3, jxb532
+ * 
  */
 public class AlphaBetaAgent extends Agent {
     private static final long serialVersionUID = -4047208702628325380L;
@@ -74,39 +74,39 @@ public class AlphaBetaAgent extends Agent {
         State currentState = generateState(currentStateView);
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
         List<Node> bestPath = searchSpace.getBestPath(); 
-		
+        
         return builder;
     }
 
-	private State generateState(StateView currentStateView) {
-		List<Integer> unitIds = currentStateView.getAllUnitIds();
-		List<Integer> footmanIds = new ArrayList<Integer>();
-		List<Integer> archerIds = new ArrayList<Integer>();
-		for (int i = 0; i < unitIds.size(); i++) {
-			int id = unitIds.get(i);
-			UnitView unit = currentStateView.getUnit(id);
-			String unitTypeName = unit.getTemplateView().getName();
-			System.out.println("Unit Type Name: " + unitTypeName);
-			if (unitTypeName.equalsIgnoreCase("Footman")) {
-				footmanIds.add(id);
-			} else if (unitTypeName.equalsIgnoreCase("Archer")) {
-				archerIds.add(id);
-			}
-		}
-		
-		List<Unit> footmen = new ArrayList<Unit>();
-		for (Integer id : footmanIds) {
-			footmen.add(new Unit(currentStateView.getUnit(id)));
-		}
-		
-		List<Unit> archers = new ArrayList<Unit>();
-		for (Integer id : archerIds) {
-			archers.add(new Unit(currentStateView.getUnit(id)));
-		}
-		
+    private State generateState(StateView currentStateView) {
+        List<Integer> unitIds = currentStateView.getAllUnitIds();
+        List<Integer> footmanIds = new ArrayList<Integer>();
+        List<Integer> archerIds = new ArrayList<Integer>();
+        for (int i = 0; i < unitIds.size(); i++) {
+            int id = unitIds.get(i);
+            UnitView unit = currentStateView.getUnit(id);
+            String unitTypeName = unit.getTemplateView().getName();
+            System.out.println("Unit Type Name: " + unitTypeName);
+            if (unitTypeName.equalsIgnoreCase("Footman")) {
+                footmanIds.add(id);
+            } else if (unitTypeName.equalsIgnoreCase("Archer")) {
+                archerIds.add(id);
+            }
+        }
+        
+        List<Unit> footmen = new ArrayList<Unit>();
+        for (Integer id : footmanIds) {
+            footmen.add(new Unit(currentStateView.getUnit(id)));
+        }
+        
+        List<Unit> archers = new ArrayList<Unit>();
+        for (Integer id : archerIds) {
+            archers.add(new Unit(currentStateView.getUnit(id)));
+        }
+        
         State initialState = new State(footmen, archers);
-		return initialState;
-	}
+        return initialState;
+    }
 
     @Override
     public void terminalStep(StateView newstate, History.HistoryView statehistory) {
