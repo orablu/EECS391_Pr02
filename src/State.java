@@ -69,6 +69,31 @@ public class State {
         return sum;
     }
     
+    /**
+     * Calculates the utility of a state
+     * @return the utility
+     */
+    public int getStateUtility() {
+
+    	int footmanHP = 0;
+    	for (Unit footman : footmen) {
+    		footmanHP += footman.getHP();
+    	}
+    	
+    	int archerHP = 0;
+    	for (Unit archer : archers) {
+    		archerHP += archer.getHP();
+    	}
+    	
+    	int footmenAlive = footmen.size();
+    	int archersAlive = archers.size();
+    	
+    	//TODO
+    	int distance = 0;
+    	
+    	return footmanHP + (10 * distance) - (100 * archerHP) + (1000 * footmenAlive) - (10000 * archersAlive);
+    }
+    
     public State getNextState(Action action1, Action action2) {
     	State nextState = new State(this);
     	nextState.applyAction(action1);
