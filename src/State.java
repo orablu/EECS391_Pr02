@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class State {
@@ -88,10 +89,25 @@ public class State {
     	int footmenAlive = footmen.size();
     	int archersAlive = archers.size();
     	
-    	//TODO
     	int distance = 0;
+    	for (Unit footman : footmen) {
+    		distance += getNearestDistance(footman);
+    	}
     	
     	return footmanHP + (10 * distance) - (100 * archerHP) + (1000 * footmenAlive) - (10000 * archersAlive);
+    }
+
+    private int getNearestDistance(Unit entity) {
+        int x = entity.getXPosition();
+        int y = entity.getYPosition();
+
+        List<Integer> distances = new ArrayList<>();
+        for (Unit archer : archers) {
+            distances.add(Math.max(
+                        Math.abs(x - archer.getXPosition()),
+                        Math.abs(y - archer.getYPosition())));
+        }
+        return distances.isEmpty() ? 0 : Collections.min(distances);
     }
     
     public State getNextState(Action action1, Action action2) {
