@@ -6,6 +6,14 @@ public class State {
     private int[][] footmen;
     private int[][] archers;
 
+    public State() {
+        this(
+                new int[] { 0, 0, 0 },
+                new int[] { 0, 0, 0 },
+                new int[] { 0, 0, 0 },
+                new int[] { 0, 0, 0 });
+    }
+
     public State(int[] footman1, int[] footman2, int[] archer1, int[] archer2) {
         footmen = new int[][] { footman1, footman2 };
         archers = new int[][] { archer1, archer2 };
