@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 
 public class State {
     public static final int X = 0;
@@ -12,37 +11,38 @@ public class State {
         Max = new int[2]; Max[X] = maxX; Max[Y] = maxY;
     }
 
-    private List<UnitView> footmen;
-    private List<UnitView> archers;
+    private List<Unit> footmen;
+    private List<Unit> archers;
     
     public State() {
-        this(new ArrayList<UnitView>(), new ArrayList<UnitView>());
+        this(new ArrayList<Unit>(), new ArrayList<Unit>());
     }
 
-    public State(List<UnitView> footmen, List<UnitView> archers) {
-        this.footmen = new ArrayList<UnitView>();
+    public State(List<Unit> footmen, List<Unit> archers) {
+        this.footmen = new ArrayList<Unit>();
         this.footmen.addAll(footmen);
-        this.archers = new ArrayList<UnitView>();
+        this.archers = new ArrayList<Unit>();
         this.archers.addAll(archers);
     }
 
-    public List<UnitView> getEntities() {
-        List<UnitView> entities = this.getFootmen();
+    public List<Unit> getEntities() {
+        List<Unit> entities = new ArrayList<>();
+        entities.addAll(this.getFootmen());
         entities.addAll(this.getArchers());
         return entities;
     }
 
-    public List<UnitView> getFootmen() {
+    public List<Unit> getFootmen() {
         return footmen;
     }
     
-    public List<UnitView> getArchers() {
+    public List<Unit> getArchers() {
         return archers;
     }
 
     public int getFootmenHealth() {
         int sum = 0;
-        for (UnitView footman : footmen) {
+        for (Unit footman : footmen) {
         	sum += footman.getHP();
         }
         
@@ -51,9 +51,14 @@ public class State {
 
     public int getArcherHealth() {
         int sum = 0;
-        for (UnitView archer : archers) {
+        for (Unit archer : archers) {
         	sum += archer.getHP();
         }
         return sum;
+    }
+    
+    // TODO
+    public State getNextState(Action action1, Action action2) {
+    	return null;
     }
 }

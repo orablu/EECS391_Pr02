@@ -1,4 +1,3 @@
-import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 import edu.cwru.sepia.util.Direction;
 
 public class Action {
@@ -10,8 +9,8 @@ public class Action {
     };
 
     private Type type;
-    private UnitView entity;
-    private UnitView target;
+    private Unit entity;
+    private Unit target;
     private Direction direction;
 
     public Action() {
@@ -21,20 +20,20 @@ public class Action {
         this.direction = null;
     }
 
-	public Action(UnitView entity) {
+	public Action(Unit entity) {
          this();
          this.type = Type.Stay;
          this.entity = entity;
 	}
 
-    public Action(UnitView entity, UnitView target) {
+    public Action(Unit entity, Unit target) {
         this();
         this.type = Type.Attack;
         this.entity = entity;
         this.target = target;
     }
 
-    public Action(UnitView entity, Direction direction) {
+    public Action(Unit entity, Direction direction) {
         this();
         this.type = Type.Move;
         this.entity = entity;
@@ -45,11 +44,11 @@ public class Action {
         return this.type;
     }
 
-    public UnitView getEntity() {
+    public Unit getEntity() {
         return this.entity;
     }
 
-    public UnitView getTarget() {
+    public Unit getTarget() {
         return this.target;
     }
 

@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.cwru.sepia.environment.model.state.Unit.UnitView;
+import edu.cwru.sepia.util.Direction;
 
 public class FootmanAlphaBetaNode extends AlphaBetaNode {
     public FootmanAlphaBetaNode(State state) {
@@ -18,50 +18,53 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         List<State> states = new ArrayList<>();
 
         // TODO: Do some shit
-        List<UnitView> footmen = state.getFootmen();
-        List<UnitView> archers = state.getArchers();
+        List<Unit> footmen = state.getFootmen();
         
-        Map<UnitView, List<Action>> actions = new HashMap<>();
+        Map<Unit, List<Action>> actions = new HashMap<>();
         
-        for (UnitView footman : footmen) {
+        for (Unit footman : footmen) {
         	actions.put(footman, new ArrayList<Action>());
         	
         	int x = footman.getXPosition();
         	int y = footman.getYPosition();
         	
+        	//TODO not null
+        	Unit target = null;
         	if (targetAdjacent(x, y)) {
         		// TODO make this an attack action
-        		Action action = new Action();
+        		Action action = new Action(footman, target);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x + 1, y)) {
-        		//TODO make this EAST action
-        		Action action = new Action();
+        		Action action = new Action(footman, Direction.EAST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y + 1)) {
-        		//TODO make this NORTH action
-        		Action action = new Action();
+        		Action action = new Action(footman, Direction.NORTH);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x - 1, y)) {
-        		//TODO make this WEST action
-        		Action action = new Action();
+        		Action action = new Action(footman, Direction.WEST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y - 1)) {
-        		//TODO make this SOUTH action
-        		Action action = new Action();
+        		Action action = new Action(footman, Direction.SOUTH);
         		actions.get(footman).add(action);
         	}
         }
         
         for (Action fmanOneAction : actions.get(footmen.get(0))) {
-        	
+        	if (footmen.size() > 1) { // if there are two footmen left
+        		for (Action fmanTwoAction : actions.get(footmen.get(1))) {
+        			states.add(state.getNextState(fmanOneAction, fmanTwoAction));
+        		}
+        	} else { // if there is only one footman left, add an empty action
+        		states.add(state.getNextState(fmanOneAction, new Action()));
+        	}
         }
 
         return states;
@@ -94,9 +97,9 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         return isAdjacent(state.getFootmen(), x, y);
     }
 
-    private boolean isAdjacent(List<UnitView> entities, int x, int y) {
+    private boolean isAdjacent(List<Unit> entities, int x, int y) {
         // Check if the coordinate is occupied.
-        for (UnitView e : entities) {
+        for (Unit e : entities) {
             if (x == e.getXPosition() && y == e.getYPosition()) {
                 return false;
             }
