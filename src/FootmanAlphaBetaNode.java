@@ -1,5 +1,6 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 
 public class FootmanAlphaBetaNode extends AlphaBetaNode {
@@ -15,6 +16,14 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         List<State> states = new ArrayList<>();
 
         // TODO: Do some shit
+        List<UnitView> footmen = state.getFootmen();
+        List<UnitView> archers = state.getArchers();
+        
+        for (UnitView footman : footmen) {
+        	if (targetAdjacent(footman.getXPosition(), footman.getYPosition())) {
+        		//states.add enum.attack
+        	}
+        }
 
         return states;
     }
