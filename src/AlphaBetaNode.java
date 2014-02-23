@@ -1,5 +1,5 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AlphaBetaNode extends Node {
     private static int alpha, beta;
@@ -104,6 +104,27 @@ public abstract class AlphaBetaNode extends Node {
                 }
             }
         }
+    }
+
+    protected boolean isValidPosition(int x, int y) {
+        // Check boundaries.
+        if (x < State.Min[State.X] || y < State.Min[State.Y]) {
+            return false;
+        } else if (x >= State.Max[State.X] || y >= State.Max[State.Y]) {
+            return false;
+        }
+
+        return !isAt(state.getEntities(), x, y);
+    }
+
+    protected boolean isAt(List<Unit> entities, int x, int y) {
+        // Check if the coordinate is occupied.
+        for (Unit e : entities) {
+            if (x == e.getXPosition() && y == e.getYPosition()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     // Populates this.possibleStates from this node's state.

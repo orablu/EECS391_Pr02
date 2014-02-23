@@ -17,7 +17,6 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     protected List<State> generatePossibleStates() {
         List<State> states = new ArrayList<>();
 
-        // TODO: Do some shit
         List<Unit> footmen = state.getFootmen();
         
         Map<Unit, List<Action>> actions = new HashMap<>();
@@ -76,33 +75,12 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         return new ArcherAlphaBetaLeaf(state);
     }
 
-    private boolean isValidPosition(int x, int y) {
-        // Check boundaries.
-        if (x < State.Min[State.X] || y < State.Min[State.Y]) {
-            return false;
-        } else if (x >= State.Max[State.X] || y >= State.Max[State.Y]) {
-            return false;
-        }
-
-        return !isAt(state.getEntities(), x, y);
-    }
-
     private boolean targetAt(int x, int y) {
         return isAt(state.getArchers(), x, y);
     }
 
     private boolean allyAt(int x, int y) {
         return isAt(state.getFootmen(), x, y);
-    }
-
-    private boolean isAt(List<Unit> entities, int x, int y) {
-        // Check if the coordinate is occupied.
-        for (Unit e : entities) {
-            if (x == e.getXPosition() && y == e.getYPosition()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     private List<Unit> targetsAdjacent(int x, int y) {
