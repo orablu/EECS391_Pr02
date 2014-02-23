@@ -34,10 +34,14 @@ public abstract class AlphaBetaNode extends Node {
 
     public List<Action> getActions() {
         List<Action> actions = new ArrayList<>();
-        if (action1 != null && action1.getType() != Action.Type.Undefined) {
+        if (action1 != null || action2 == null) {
+            this.setActions();
+        }
+
+        if (action1.getType() != Action.Type.Undefined) {
             actions.add(action1);
         }
-        if (action2 != null && action2.getType() != Action.Type.Undefined) {
+        if (action2.getType() != Action.Type.Undefined) {
             actions.add(action2);
         }
         return actions;
