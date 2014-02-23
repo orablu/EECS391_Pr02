@@ -1,6 +1,6 @@
 public class FootmanAlphaBetaLeaf extends AlphaBetaLeaf {
-    public FootmanAlphaBetaLeaf(State state, boolean isMaxNode) {
-        super(state, isMaxNode);
+    public FootmanAlphaBetaLeaf(State state) {
+        super(state, true);
     }
 
     protected int getWeightFromState() {
