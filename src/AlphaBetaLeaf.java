@@ -3,10 +3,14 @@ import java.util.ArrayList;
 
 public abstract class AlphaBetaLeaf extends Node {
     private Integer weight;
+    protected State state;
+    protected boolean isMaxNode;
 
     public AlphaBetaLeaf(State state, boolean isMaxNode) {
         super();
-        weight = null;
+        this.weight = null;
+        this.state = state;
+        this.isMaxNode = isMaxNode;
     }
 
     public int getWeight() {

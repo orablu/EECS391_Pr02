@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.ArrayList;
+
 public class State {
     public static final int X = 0;
     public static final int Y = 1;
@@ -35,8 +38,33 @@ public class State {
         archers = new int[][] { archer1, archer2 };
     }
 
-    public int[] getFootman(int index) {
-        return footmen[index];
+    public List<int[]> getEntities() {
+        List<int[]> entities = this.getFootmen();
+        entities.addAll(this.getArchers());
+        return entities;
+    }
+
+    public List<int[]> getFootmen() {
+        List<int[]> entities = new ArrayList<>();
+        entities.add(footmen[0]);
+        entities.add(footmen[1]);
+        return entities;
+    }
+        
+    public List<int[]> getArchers() {
+        List<int[]> entities = new ArrayList<>();
+        entities.add(archers[0]);
+        entities.add(archers[1]);
+        return entities;
+    }
+
+    public int[] getFootman(int id) {
+        if (footmen[0][ID] == id) {
+            return footmen[0];
+        } else if (footmen[1][ID] == id) {
+            return footmen[1];
+        }
+        return null;
     }
 
     public int getFootmenHealth() {
@@ -47,7 +75,12 @@ public class State {
         return archers[0][HP] + archers[1][HP];
     }
 
-    public int[] getArcher(int index) {
-        return archers[index];
+    public int[] getArcher(int id) {
+        if (archers[0][ID] == id) {
+            return archers[0];
+        } else if (archers[1][ID] == id) {
+            return archers[1];
+        }
+        return null;
     }
 }
