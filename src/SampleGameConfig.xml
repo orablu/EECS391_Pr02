@@ -2,7 +2,7 @@
 	<Map>Game2fva.xml</Map>
 	<Player Id="0">
 		<AgentClass>
-			<ClassName>edu.cwru.sepia.agent.CombatAgent</ClassName>
+			<ClassName>CombatAgent</ClassName>
 			<Argument>0</Argument>
 		</AgentClass>
 	</Player>
