@@ -3,6 +3,11 @@ public class ArcherAlphaBetaLeaf extends AlphaBetaLeaf {
         super(state, false);
     }
 
+    protected void setActions() {
+        action1 = new Action();
+        action2 = new Action();
+    }
+
     protected int getWeightFromState() {
         return -state.getFootmenHealth();
     }

@@ -20,4 +20,9 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     protected AlphaBetaLeaf getLeafFromState(State state) {
         return new FootmanAlphaBetaLeaf(state);
     }
+
+    protected void setActions() {
+        action1 = new Action();
+        action2 = new Action();
+    }
 }
