@@ -2,11 +2,11 @@ import java.util.List;
 
 public class ArcherAlphaBetaNode extends AlphaBetaNode {
     public ArcherAlphaBetaNode(State state) {
-        this(state, 0, true);
+        this(state, 0);
     }
 
-    public ArcherAlphaBetaNode(State state, int depth, boolean isMaxNode) {
-        super(state, depth, isMaxNode);
+    public ArcherAlphaBetaNode(State state, int depth) {
+        super(state, depth, false);
     }
 
     protected List<State> generatePossibleStates() {

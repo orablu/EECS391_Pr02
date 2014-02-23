@@ -1,23 +1,26 @@
 import java.util.List;
 import java.util.ArrayList;
+import edu.cwru.sepia.environment.model.state.Unit.UnitView;
 
 public class FootmanAlphaBetaNode extends AlphaBetaNode {
     public FootmanAlphaBetaNode(State state) {
-        this(state, 0, true);
+        this(state, 0);
     }
 
-    public FootmanAlphaBetaNode(State state, int depth, boolean isMaxNode) {
-        super(state, depth, isMaxNode);
+    public FootmanAlphaBetaNode(State state, int depth) {
+        super(state, depth, true);
     }
 
     protected List<State> generatePossibleStates() {
         List<State> states = new ArrayList<>();
 
+        // TODO: Do some shit
+
         return states;
     }
 
     protected AlphaBetaNode getChildFromState(State state) {
-        return null;
+        return new ArcherAlphaBetaNode(state, depth + 1);
     }
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
@@ -43,10 +46,10 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         return isAdjacent(state.getFootmen(), x, y);
     }
 
-    private boolean isAdjacent(List<int[]> entities, int x, int y) {
+    private boolean isAdjacent(List<UnitView> entities, int x, int y) {
         // Check if the coordinate is occupied.
-        for (int[] e : entities) {
-            if (x == e[State.X] && y == e[State.Y]) {
+        for (UnitView e : entities) {
+            if (x == e.getXPosition() && y == e.getYPosition()) {
                 return false;
             }
         }
