@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.ArrayList;
 
 public abstract class AlphaBetaNode extends Node {
     private static int alpha, beta;
@@ -29,6 +30,17 @@ public abstract class AlphaBetaNode extends Node {
             this.weight = this.getBestNode().getWeight();
         }
         return this.weight;
+    }
+
+    public List<Action> getActions() {
+        List<Action> actions = new ArrayList<>();
+        if (action1 != null && action1.getType() != Action.Type.Undefined) {
+            actions.add(action1);
+        }
+        if (action2 != null && action2.getType() != Action.Type.Undefined) {
+            actions.add(action2);
+        }
+        return actions;
     }
 
     public Node getBestNode() {
@@ -96,4 +108,7 @@ public abstract class AlphaBetaNode extends Node {
     // Returns the node/leaf created from the given state.
     protected abstract AlphaBetaNode getChildFromState(State state);
     protected abstract AlphaBetaLeaf getLeafFromState(State state);
+
+    // Sets the actions that this node takes.
+    protected abstract void setActions();
 }

@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 public abstract class Node {
     protected List<Node> children;
+    protected Action action1;
+    protected Action action2;
 
     public Node() {
         this.children = new ArrayList<>();
