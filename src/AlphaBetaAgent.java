@@ -31,7 +31,6 @@ import edu.cwru.sepia.agent.Agent;
 import edu.cwru.sepia.environment.model.history.History;
 import edu.cwru.sepia.environment.model.state.State.StateView;
 import edu.cwru.sepia.environment.model.state.Unit.UnitView;
-import edu.cwru.sepia.util.Direction;
 
 /**
  * This agent will first collect gold to produce a peasant, then the two
@@ -60,20 +59,41 @@ public class AlphaBetaAgent extends Agent {
     public Map<Integer, Action> initialStep(StateView newstate, History.HistoryView statehistory) {
         step = 0;
 
-        // Generate the search space and find the optimal path.
-        AlphaBetaNode.setupSearch(treeDepth);
-        State initialState = new State();
-        AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(initialState);
-        List<Node> bestPath = searchSpace.getBestPath(); 
-
         return middleStep(newstate, statehistory);
     }
 
     @Override
     public Map<Integer, Action> middleStep(StateView newState, History.HistoryView statehistory) {
         step++;
-
-        return null;
+        
+        StateView currentState = newState;
+        Map<Integer,Action> builder = new HashMap<Integer,Action>();
+        
+        List<Integer> myUnitIds = currentState.getUnitIds(playernum);
+		List<Integer> footmanIds = new ArrayList<Integer>();
+		List<Integer> archerIds = new ArrayList<Integer>();
+		for(int i = 0; i < myUnitIds.size(); i++) {
+			int id = myUnitIds.get(i);
+			UnitView unit = currentState.getUnit(id);
+			String unitTypeName = unit.getTemplateView().getName();
+			System.out.println("Unit Type Name: " + unitTypeName);
+			if (unitTypeName.equalsIgnoreCase("Footman")) {
+				footmanIds.add(id);
+			} else if (unitTypeName.equalsIgnoreCase("Archer")) {
+				archerIds.add(id);
+			}
+		}
+		
+		List<Integer> enemyUnitIds = currentState.getAllUnitIds();
+		enemyUnitIds.removeAll(myUnitIds);
+		
+        // Generate the search space and find the optimal path.
+        AlphaBetaNode.setupSearch(treeDepth);
+        State initialState = new State();
+        AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(initialState);
+        List<Node> bestPath = searchSpace.getBestPath(); 
+		
+        return builder;
     }
 
     @Override
