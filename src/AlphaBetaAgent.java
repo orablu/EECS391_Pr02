@@ -58,7 +58,27 @@ public class AlphaBetaAgent extends Agent {
     @Override
     public Map<Integer, edu.cwru.sepia.action.Action> initialStep(StateView newstate, History.HistoryView statehistory) {
         step = 0;
+        
         State.setupBoard(0, newstate.getXExtent(), 0, newstate.getYExtent());
+        
+        List<Integer> unitIds = newstate.getAllUnitIds();
+        List<UnitView> footmans = new ArrayList<>();
+        List<UnitView> archers = new ArrayList<>();
+        for (int i = 0; i < unitIds.size(); i++) {
+            int id = unitIds.get(i);
+            UnitView unit = newstate.getUnit(id);
+            String unitTypeName = unit.getTemplateView().getName();
+            System.out.println("Unit Type Name: " + unitTypeName);
+            if (unitTypeName.equalsIgnoreCase("Footman")) {
+                footmans.add(unit);
+            } else if (unitTypeName.equalsIgnoreCase("Archer")) {
+                archers.add(unit);
+            }
+        }
+        
+        Unit.setupUnit(archers.get(0).getTemplateView().getRange(),
+        		archers.get(0).getTemplateView().getBasicAttack(), footmans.get(0).getTemplateView().getBasicAttack());
+        
         return middleStep(newstate, statehistory);
     }
 
@@ -112,7 +132,6 @@ public class AlphaBetaAgent extends Agent {
             int id = unitIds.get(i);
             UnitView unit = currentStateView.getUnit(id);
             String unitTypeName = unit.getTemplateView().getName();
-            System.out.println("Unit Type Name: " + unitTypeName);
             if (unitTypeName.equalsIgnoreCase("Footman")) {
                 footmanIds.add(id);
             } else if (unitTypeName.equalsIgnoreCase("Archer")) {

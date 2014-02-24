@@ -1,8 +1,9 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Node {
     protected List<Node> children;
+    protected State state;
 
     public Node() {
         this.children = new ArrayList<>();
@@ -42,7 +43,10 @@ public abstract class Node {
         return minNode;
     }
 
+    public State getState() {
+    	return state;
+    }
+
     public abstract int getWeight();
     public abstract List<Node> getBestPath();
-    public abstract State getState();
 }

@@ -1,9 +1,8 @@
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class AlphaBetaLeaf extends Node {
+public class AlphaBetaLeaf extends Node {
     private Integer weight;
-    protected State state;
     protected boolean isMaxNode;
 
     public AlphaBetaLeaf(State state, boolean isMaxNode) {
@@ -25,10 +24,8 @@ public abstract class AlphaBetaLeaf extends Node {
         bestPath.add(0, this);
         return bestPath;
     }
-    
-    public State getState() {
-    	return state;
-    }
 
-    protected abstract int getWeightFromState();
+    protected int getWeightFromState() {
+        return state.getStateUtility();
+    }
 }

@@ -7,7 +7,6 @@ public abstract class AlphaBetaNode extends Node {
 
     protected boolean isMaxNode;
     protected int depth;
-    protected State state;
     private Node bestNode;
     private Integer weight;
 
@@ -42,13 +41,6 @@ public abstract class AlphaBetaNode extends Node {
             actions.add(state.getAction2());
         }
         return actions;
-    }
-
-    /**
-     * @return the state
-     */
-    public State getState() {
-        return state;
     }
 
     public Node getBestNode() {

@@ -142,7 +142,7 @@ public class State {
 		
 		switch(action.getType()) {
 		case ATTACK:
-			int damage = unit.getTemplateView().getBasicAttack();
+			int damage = unit.isFootman() ? Unit.FOOTMAN_DAMAGE : Unit.ARCHER_DAMAGE;
 			Unit stateUnit = getUnitFromID(unit.getId());
 			stateUnit.setHP(stateUnit.getHP() - damage);
 			break;
@@ -189,5 +189,21 @@ public class State {
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		String s = "Current state:\n";
+		
+		for (Unit footman : footmen) {
+			s += ("\tFootman " + footman.getId() + " at: " + footman.getXPosition() + "," + footman.getYPosition() + "; with HP: " + footman.getHP() + "\n");
+		}
+		
+		for (Unit archer : archers) {
+			 s += ("\tArcher " + archer.getId() + " at: " + archer.getXPosition() + "," + archer.getYPosition() + "; with HP: " + archer.getHP() + "\n");
+		}
+		s += ("\tPrevious move 1: " + prevAction1 + " performed by unit " + prevAction1.getEntity().getId() + "\n");
+		s += ("\tPrevious move 2: " + prevAction2 + " performed by unit " + prevAction2.getEntity().getId() + "\n");
+		return s;
 	}
 }

@@ -27,7 +27,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         	int x = archer.getXPosition();
         	int y = archer.getYPosition();
         	
-        	List<Unit> targetsInRange = targetsInRange(x, y, archer.getTemplateView().getRange());
+        	List<Unit> targetsInRange = targetsInRange(x, y, Unit.ARCHER_RANGE);
         	for (Unit target : targetsInRange) {
         		StateAction action = new StateAction(archer, target);
         		actions.get(archer).add(action);
@@ -72,7 +72,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
-        return new FootmanAlphaBetaLeaf(state);
+        return new AlphaBetaLeaf(state, true);
     }
 
     @Override
@@ -82,10 +82,11 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
     
     private List<Unit> targetsInRange(int x, int y, int range) {
-        List<Unit> targets = state.getFootmen();
+        List<Unit> targets = new ArrayList<>();
+        List<Unit> allTargets = state.getFootmen();
         for (int i = x - range; i <= x + range; i++) {
             for (int j = y - range; j <= y + range; j++) {
-                for (Unit target : targets) {
+                for (Unit target : allTargets) {
                     if (target.getXPosition() == i && target.getYPosition() == j) {
                         targets.add(target);
                     }

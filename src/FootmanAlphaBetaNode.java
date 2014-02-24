@@ -72,7 +72,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
-        return new ArcherAlphaBetaLeaf(state);
+        return new AlphaBetaLeaf(state, false);
     }
 
     private boolean targetAt(int x, int y) {
@@ -84,10 +84,11 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     private List<Unit> targetsAdjacent(int x, int y) {
-        List<Unit> targets = state.getArchers();
+    	List<Unit> targets = new ArrayList<>();
+        List<Unit> allTargets = state.getArchers();
         for (int i = x - 1; i <= x + 1; i++) {
             for (int j = y - 1; j <= y + 1; j++) {
-                for (Unit target : targets) {
+                for (Unit target : allTargets) {
                     if (target.getXPosition() == i && target.getYPosition() == j) {
                         targets.add(target);
                     }

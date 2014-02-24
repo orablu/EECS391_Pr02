@@ -1,20 +1,29 @@
 import edu.cwru.sepia.environment.model.state.Unit.UnitView;
-import edu.cwru.sepia.environment.model.state.UnitTemplate.UnitTemplateView;
 
 
 public class Unit {
+	public static int ARCHER_RANGE;
+	public static int ARCHER_DAMAGE;
+	public static int FOOTMAN_DAMAGE;
+	
 	private int hp;
 	private int id;
 	private int xPosition;
 	private int yPosition;
-	private UnitTemplateView templateView;
+	private boolean isFootman;
+	
+	public static void setupUnit(int archerRange, int archerDamage, int footmanDamage) {
+		ARCHER_RANGE = archerRange;
+		ARCHER_DAMAGE = archerDamage;
+		FOOTMAN_DAMAGE = footmanDamage;
+	}
 
 	public Unit(UnitView unit) {
 		hp = unit.getHP();
 		id = unit.getID();
 		xPosition = unit.getXPosition();
 		yPosition = unit.getYPosition();
-		templateView = unit.getTemplateView();
+		isFootman = unit.getTemplateView().getName().equalsIgnoreCase("Footman");
 	}
 	
 	public Unit(Unit footman) {
@@ -22,7 +31,6 @@ public class Unit {
 		id = footman.getId();
 		xPosition = footman.getXPosition();
 		yPosition = footman.getYPosition();
-		templateView = footman.getTemplateView();
 	}
 
 	public int getHP() {
@@ -53,7 +61,8 @@ public class Unit {
 		this.yPosition = yPosition;
 	}
 	
-	public UnitTemplateView getTemplateView() {
-		return templateView;
+	public boolean isFootman() {
+		return isFootman;
 	}
+
 }
