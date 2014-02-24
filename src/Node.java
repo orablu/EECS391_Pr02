@@ -44,4 +44,5 @@ public abstract class Node {
 
     public abstract int getWeight();
     public abstract List<Node> getBestPath();
+    public abstract State getState();
 }
