@@ -44,6 +44,13 @@ public abstract class AlphaBetaNode extends Node {
         return actions;
     }
 
+    /**
+     * @return the state
+     */
+    public State getState() {
+        return state;
+    }
+
     public Node getBestNode() {
         if (this.bestNode == null) {
             this.generateTree();
