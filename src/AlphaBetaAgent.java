@@ -92,9 +92,8 @@ public class AlphaBetaAgent extends Agent {
         // Generate the search space and find the optimal path.
         AlphaBetaNode.setupSearch(treeDepth);
         State currentState = generateState(currentStateView);
-        System.out.println("Created initial state");
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
-        System.out.println("Reset search space");
+        System.out.println("\nCREATED INITIAL NODE: " + searchSpace);
         State nextState = searchSpace.getBestNode().getState();
         System.out.println("Found next state!");
         

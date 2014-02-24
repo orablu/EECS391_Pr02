@@ -28,4 +28,10 @@ public class AlphaBetaLeaf extends Node {
     protected int getWeightFromState() {
         return state.getStateUtility();
     }
+    
+    @Override
+    public String toString() {
+    	String s = "Leaf with state: \n\t" + state + "\n";
+    	return s;
+    }
 }

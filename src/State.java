@@ -161,10 +161,10 @@ public class State {
 			stateUnit.setXPosition(stateUnit.getXPosition() + 1);
 			break;
 		case NORTH:
-			stateUnit.setYPosition(stateUnit.getYPosition() + 1);
+			stateUnit.setYPosition(stateUnit.getYPosition() - 1);
 			break;
 		case SOUTH:
-			stateUnit.setYPosition(stateUnit.getYPosition() - 1);
+			stateUnit.setYPosition(stateUnit.getYPosition() + 1);
 			break;
 		case WEST:
 			stateUnit.setXPosition(stateUnit.getXPosition() - 1);
@@ -202,8 +202,10 @@ public class State {
 		for (Unit archer : archers) {
 			 s += ("\tArcher " + archer.getId() + " at: " + archer.getXPosition() + "," + archer.getYPosition() + "; with HP: " + archer.getHP() + "\n");
 		}
-		s += ("\tPrevious move 1: " + prevAction1 + " performed by unit " + prevAction1.getEntity().getId() + "\n");
-		s += ("\tPrevious move 2: " + prevAction2 + " performed by unit " + prevAction2.getEntity().getId() + "\n");
+		String unit = prevAction1.getEntity() == null ? "" : " performed by unit " + prevAction1.getEntity().getId();
+		s += ("\tPrevious move 1: " + prevAction1.getType() + unit + "\n");
+		unit = prevAction2.getEntity() == null ? "" : " performed by unit " + prevAction2.getEntity().getId();
+		s += ("\tPrevious move 2: " + prevAction2.getType() + unit + "\n");
 		return s;
 	}
 }

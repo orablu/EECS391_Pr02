@@ -85,6 +85,7 @@ public abstract class AlphaBetaNode extends Node {
             } else {
                 node = getLeafFromState(state);
             }
+            System.out.println("\nGENERATING CHILD: " + node);
             this.children.add(node);
 
             // Alpha Beta pruning.
@@ -124,6 +125,13 @@ public abstract class AlphaBetaNode extends Node {
             }
         }
         return true;
+    }
+    
+    @Override
+    public String toString() {
+    	String s = "Node with state: \n\t" + state + "\n";
+    	s += "Depth: " + depth + "\n";
+    	return s;
     }
 
     // Populates this.possibleStates from this node's state.
