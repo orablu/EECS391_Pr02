@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import edu.cwru.sepia.action.Action;
 import edu.cwru.sepia.agent.Agent;
 import edu.cwru.sepia.environment.model.history.History;
 import edu.cwru.sepia.environment.model.state.State.StateView;
@@ -56,18 +55,18 @@ public class AlphaBetaAgent extends Agent {
     }
 
     @Override
-    public Map<Integer, Action> initialStep(StateView newstate, History.HistoryView statehistory) {
+    public Map<Integer, edu.cwru.sepia.action.Action> initialStep(StateView newstate, History.HistoryView statehistory) {
         step = 0;
 
         return middleStep(newstate, statehistory);
     }
 
     @Override
-    public Map<Integer, Action> middleStep(StateView newState, History.HistoryView statehistory) {
+    public Map<Integer, edu.cwru.sepia.action.Action> middleStep(StateView newState, History.HistoryView statehistory) {
         step++;
         
         StateView currentStateView = newState;
-        Map<Integer,Action> builder = new HashMap<Integer,Action>();
+        Map<Integer,edu.cwru.sepia.action.Action> builder = new HashMap<Integer,edu.cwru.sepia.action.Action>();
         
         // Generate the search space and find the optimal path.
         AlphaBetaNode.setupSearch(treeDepth);

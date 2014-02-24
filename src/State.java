@@ -15,19 +15,32 @@ public class State {
     private List<Unit> footmen;
     private List<Unit> archers;
     
+    // save the two actions that led to this state (one for each footman, or one for each archer)
+    private Action prevAction1;
+    private Action prevAction2;
+    
     public State() {
-        this(new ArrayList<Unit>(), new ArrayList<Unit>());
+        this(new ArrayList<Unit>(), new ArrayList<Unit>(), new Action(), new Action());
+    }
+    
+    public State(List<Unit> footmen, List<Unit> archers) {
+        this(footmen, archers, new Action(), new Action());
     }
 
-    public State(List<Unit> footmen, List<Unit> archers) {
+    public State(List<Unit> footmen, List<Unit> archers, Action action1, Action action2) {
         this.footmen = new ArrayList<Unit>();
         this.footmen.addAll(footmen);
         this.archers = new ArrayList<Unit>();
         this.archers.addAll(archers);
+        this.prevAction1 = action1;
+        this.prevAction2 = action2;
     }
 
-    public State(State state) {
+    public State(State state, Action action1, Action action2) {
 		this();
+		
+		prevAction1 = action1;
+		prevAction2 = action2;
 		
 		for (Unit footman : state.getFootmen()) {
 			footmen.add(new Unit(footman));
@@ -68,6 +81,13 @@ public class State {
         	sum += archer.getHP();
         }
         return sum;
+    }
+    
+    public Action getAction1() {
+    	return prevAction1;
+    }
+    public Action getAction2() {
+    	return prevAction2;
     }
     
     /**
@@ -111,7 +131,7 @@ public class State {
     }
     
     public State getNextState(Action action1, Action action2) {
-    	State nextState = new State(this);
+    	State nextState = new State(this, action1, action2);
     	nextState.applyAction(action1);
     	nextState.applyAction(action2);
     	return nextState;
