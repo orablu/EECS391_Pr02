@@ -68,7 +68,7 @@ public class AlphaBetaAgent extends Agent {
             int id = unitIds.get(i);
             UnitView unit = newstate.getUnit(id);
             String unitTypeName = unit.getTemplateView().getName();
-            System.out.println("Unit Type Name: " + unitTypeName);
+            Node.Log("Unit Type Name: " + unitTypeName);
             if (unitTypeName.equalsIgnoreCase("Footman")) {
                 footmans.add(unit);
             } else if (unitTypeName.equalsIgnoreCase("Archer")) {
@@ -93,9 +93,20 @@ public class AlphaBetaAgent extends Agent {
         AlphaBetaNode.setupSearch(treeDepth);
         State currentState = generateState(currentStateView);
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
-        System.out.println("\nCREATED INITIAL NODE: " + searchSpace);
+        Node.Log("CREATED INITIAL NODE: " + searchSpace, Node.Level.Low);
         State nextState = searchSpace.getBestNode().getState();
-        System.out.println("Found next state!");
+        Node.Log("Found next state!", Node.Level.High);
+
+        List<Node> path = searchSpace.getBestNode().getBestPath();
+        Node.Log("\nCurrent best path:");
+        for (Node node : path) {
+            Node.Log("State actions:");
+            Node.Log(node.getState().getAction1().toString());
+            if (node.getState().getAction2().getType() != StateAction.Type.UNDEFINED) {
+                Node.Log(node.getState().getAction2().toString());
+            }
+        }
+        Node.Log("");
         
         List<StateAction> actions = new ArrayList<>();
         actions.add(nextState.getAction1());
@@ -105,17 +116,17 @@ public class AlphaBetaAgent extends Agent {
         	Action move = null;
         	switch (action.getType()) {
         	case ATTACK:
-        		System.out.println("Attacking!");
+                Node.Log("Attacking!");
         		move = Action.createPrimitiveAttack(action.getEntity().getId(), action.getTarget().getId());
         		builder.put(action.getEntity().getId(), move);
         		break;
         	case MOVE:
-        		System.out.println("Moving!");
+                Node.Log("Moving!");
         		move = Action.createPrimitiveMove(action.getEntity().getId(), action.getDirection());
         		builder.put(action.getEntity().getId(), move);
         		break;
         	default:
-        		System.out.println("Waiting");
+        		Node.Log("Waiting!");
         		break;
         	}
         }
