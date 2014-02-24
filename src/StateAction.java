@@ -55,4 +55,21 @@ public class StateAction {
     public Direction getDirection() {
         return this.direction;
     }
+
+    @Override
+    public String toString() {
+        switch (this.type) {
+            case ATTACK:
+                return String.format("%d attack %d",
+                        entity.getId(), target.getId());
+            case MOVE:
+                return String.format("%d moves %s",
+                        entity.getId(), direction.toString());
+            case STAY:
+                return String.format("%d stays",
+                        entity.getId());
+            default:
+                return new String();
+        }
+    }
 }

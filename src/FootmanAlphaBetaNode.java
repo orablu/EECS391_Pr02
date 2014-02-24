@@ -15,7 +15,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
-    	System.out.println("GENERATING FOOTMAN STATES");
+    	Log("GENERATING FOOTMAN STATES", Level.Moderate);
         List<State> states = new ArrayList<>();
 
         List<Unit> footmen = state.getFootmen();
@@ -56,7 +56,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         }
         
         for (Unit footman : footmen) {
-        	System.out.println("Generated " + actions.get(footman).size() + " actions for Footman " + footman.getId());
+        	Log("Generated " + actions.get(footman).size() + " actions for Footman " + footman.getId(), Level.Low);
         }
         
         for (StateAction fmanOneAction : actions.get(footmen.get(0))) {

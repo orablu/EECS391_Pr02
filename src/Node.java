@@ -2,6 +2,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Node {
+    public static enum Level {
+        Critical(0), Essential(1), High(2), Moderate(3), Low(4), Trivial(5);
+        private final int value;
+        private Level(int value) { this.value = value; }
+        public int getValue() { return value; }
+    }
+    public static Level Logging = Level.High;
+    public static void Log(String text) { Log(text, Level.Essential); }
+    public static void Log(String text, Level level) {
+        if (level.getValue() <= Logging.getValue()) {
+            System.out.println(text);
+        }
+    }
+
     protected List<Node> children;
     protected State state;
 

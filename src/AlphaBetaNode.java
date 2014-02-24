@@ -62,7 +62,7 @@ public abstract class AlphaBetaNode extends Node {
         if (this.bestNode != null) {
             return;
         }
-        System.out.println("GENERATING TREE");
+        Log("GENERATING TREE", Level.Low);
         List<State> possible = this.generatePossibleStates();
         this.generateChildren(possible);
         this.setBestNode();
@@ -77,8 +77,8 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     private void generateChildren(List<State> possible) {
-    	System.out.println("GENERATING CHILDREN");
-    	System.out.println("Using " + possible.size() + " states");
+    	Log("GENERATING CHILDREN", Level.Moderate);
+    	Log("Using " + possible.size() + " states", Level.Low);
         while (!possible.isEmpty()) {
             // Create the node.
             State state = possible.remove(0);
@@ -88,7 +88,7 @@ public abstract class AlphaBetaNode extends Node {
             } else {
                 node = getLeafFromState(state);
             }
-            System.out.println("\nGENERATING CHILD: " + node);
+            Log("\nGENERATING CHILD: " + node, Level.Trivial);
             this.children.add(node);
 
             // Alpha Beta pruning.
@@ -117,16 +117,16 @@ public abstract class AlphaBetaNode extends Node {
      */
     protected boolean isValidPosition(int x, int y) {
         // Check boundaries.
-    	System.out.println("Checking if " + x + "," + y + " is valid position");
+    	Log("Checking if " + x + "," + y + " is valid position", Level.Moderate);
         if (x < State.Min[State.X] || y < State.Min[State.Y]) {
-        	System.out.println("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y]);
+        	Log("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y], Level.High);
             return false;
         } else if (x >= State.Max[State.X] || y >= State.Max[State.Y]) {
-        	System.out.println("\tToo big for bounds " + State.Max[State.X] + "," + State.Max[State.Y]);
+        	Log("\tToo big for bounds " + State.Max[State.X] + "," + State.Max[State.Y], Level.High);
             return false;
         }
 
-        System.out.println("\tIn bounds, checking if anything is there");
+        Log("\tIn bounds, checking if anything is there", Level.Moderate);
         return !isAt(state.getEntities(), x, y);
     }
 

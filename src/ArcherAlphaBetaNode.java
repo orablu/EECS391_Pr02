@@ -15,7 +15,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
-    	System.out.println("GENERATING ARCHER STATES");
+    	Log("GENERATING ARCHER STATES", Level.Moderate);
     	List<State> states = new ArrayList<>();
 
         List<Unit> archers = state.getArchers();
@@ -56,7 +56,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         }
         
         for (Unit archer : archers) {
-        	System.out.println("Generated " + actions.get(archer).size() + " actions for Archer " + archer.getId());
+        	Log("Generated " + actions.get(archer).size() + " actions for Archer " + archer.getId(), Level.Low);
         }
         
         for (StateAction archerOneAction : actions.get(archers.get(0))) {
