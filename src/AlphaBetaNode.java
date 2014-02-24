@@ -34,14 +34,10 @@ public abstract class AlphaBetaNode extends Node {
 
     public List<Action> getActions() {
         List<Action> actions = new ArrayList<>();
-        if (action1 != null || action2 == null) {
-            this.setActions();
-        }
-
-        if (action1.getType() != Action.Type.UNDEFINED) {
+        if (state.getAction1.getType() != Action.Type.UNDEFINED) {
             actions.add(action1);
         }
-        if (action2.getType() != Action.Type.UNDEFINED) {
+        if (state.getAction2.getType() != Action.Type.UNDEFINED) {
             actions.add(action2);
         }
         return actions;
@@ -133,7 +129,4 @@ public abstract class AlphaBetaNode extends Node {
     // Returns the node/leaf created from the given state.
     protected abstract AlphaBetaNode getChildFromState(State state);
     protected abstract AlphaBetaLeaf getLeafFromState(State state);
-
-    // Sets the actions that this node takes.
-    protected abstract void setActions();
 }
