@@ -33,12 +33,12 @@ public abstract class AlphaBetaNode extends Node {
         return this.weight;
     }
 
-    public List<Action> getActions() {
-        List<Action> actions = new ArrayList<>();
-        if (state.getAction1().getType() != Action.Type.UNDEFINED) {
+    public List<StateAction> getActions() {
+        List<StateAction> actions = new ArrayList<>();
+        if (state.getAction1().getType() != StateAction.Type.UNDEFINED) {
             actions.add(state.getAction1());
         }
-        if (state.getAction2().getType() != Action.Type.UNDEFINED) {
+        if (state.getAction2().getType() != StateAction.Type.UNDEFINED) {
             actions.add(state.getAction2());
         }
         return actions;

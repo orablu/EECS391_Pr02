@@ -19,48 +19,48 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
 
         List<Unit> footmen = state.getFootmen();
         
-        Map<Unit, List<Action>> actions = new HashMap<>();
+        Map<Unit, List<StateAction>> actions = new HashMap<>();
         
         for (Unit footman : footmen) {
-        	actions.put(footman, new ArrayList<Action>());
+        	actions.put(footman, new ArrayList<StateAction>());
         	
         	int x = footman.getXPosition();
         	int y = footman.getYPosition();
         	
         	List<Unit> targetsAdjacent = targetsAdjacent(x, y);
         	for (Unit target : targetsAdjacent) {
-        		Action action = new Action(footman, target);
+        		StateAction action = new StateAction(footman, target);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x + 1, y)) {
-        		Action action = new Action(footman, Direction.EAST);
+        		StateAction action = new StateAction(footman, Direction.EAST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y + 1)) {
-        		Action action = new Action(footman, Direction.NORTH);
+        		StateAction action = new StateAction(footman, Direction.NORTH);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x - 1, y)) {
-        		Action action = new Action(footman, Direction.WEST);
+        		StateAction action = new StateAction(footman, Direction.WEST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y - 1)) {
-        		Action action = new Action(footman, Direction.SOUTH);
+        		StateAction action = new StateAction(footman, Direction.SOUTH);
         		actions.get(footman).add(action);
         	}
         }
         
-        for (Action fmanOneAction : actions.get(footmen.get(0))) {
+        for (StateAction fmanOneAction : actions.get(footmen.get(0))) {
         	if (footmen.size() > 1) { // if there are two footmen left
-        		for (Action fmanTwoAction : actions.get(footmen.get(1))) {
+        		for (StateAction fmanTwoAction : actions.get(footmen.get(1))) {
         			states.add(state.getNextState(fmanOneAction, fmanTwoAction));
         		}
         	} else { // if there is only one footman left, add an empty action
-        		states.add(state.getNextState(fmanOneAction, new Action()));
+        		states.add(state.getNextState(fmanOneAction, new StateAction()));
         	}
         }
 

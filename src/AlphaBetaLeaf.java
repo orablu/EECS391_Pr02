@@ -25,6 +25,10 @@ public abstract class AlphaBetaLeaf extends Node {
         bestPath.add(0, this);
         return bestPath;
     }
+    
+    public State getState() {
+    	return state;
+    }
 
     protected abstract int getWeightFromState();
 }

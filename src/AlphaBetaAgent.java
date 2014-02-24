@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.cwru.sepia.action.Action;
 import edu.cwru.sepia.agent.Agent;
 import edu.cwru.sepia.environment.model.history.History;
 import edu.cwru.sepia.environment.model.state.State.StateView;
@@ -57,7 +58,7 @@ public class AlphaBetaAgent extends Agent {
     @Override
     public Map<Integer, edu.cwru.sepia.action.Action> initialStep(StateView newstate, History.HistoryView statehistory) {
         step = 0;
-
+        State.setupBoard(0, newstate.getXExtent(), 0, newstate.getYExtent());
         return middleStep(newstate, statehistory);
     }
 
@@ -71,9 +72,34 @@ public class AlphaBetaAgent extends Agent {
         // Generate the search space and find the optimal path.
         AlphaBetaNode.setupSearch(treeDepth);
         State currentState = generateState(currentStateView);
+        System.out.println("Created initial state");
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
-        searchSpace.generateTree();
-
+        System.out.println("Reset search space");
+        State nextState = searchSpace.getBestNode().getState();
+        System.out.println("Found next state!");
+        
+        List<StateAction> actions = new ArrayList<>();
+        actions.add(nextState.getAction1());
+        actions.add(nextState.getAction2());
+        
+        for (StateAction action : actions) {
+        	Action move = null;
+        	switch (action.getType()) {
+        	case ATTACK:
+        		System.out.println("Attacking!");
+        		move = Action.createPrimitiveAttack(action.getEntity().getId(), action.getTarget().getId());
+        		builder.put(action.getEntity().getId(), move);
+        		break;
+        	case MOVE:
+        		System.out.println("Moving!");
+        		move = Action.createPrimitiveMove(action.getEntity().getId(), action.getDirection());
+        		builder.put(action.getEntity().getId(), move);
+        		break;
+        	default:
+        		System.out.println("Waiting");
+        		break;
+        	}
+        }
         
         return builder;
     }

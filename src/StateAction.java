@@ -1,6 +1,6 @@
 import edu.cwru.sepia.util.Direction;
 
-public class Action {
+public class StateAction {
     public static enum Type {
         UNDEFINED,
         ATTACK,
@@ -13,27 +13,27 @@ public class Action {
     private Unit target;
     private Direction direction;
 
-    public Action() {
+    public StateAction() {
         this.type = Type.UNDEFINED;
         this.entity = null;
         this.target = null;
         this.direction = null;
     }
 
-	public Action(Unit entity) {
+	public StateAction(Unit entity) {
          this();
          this.type = Type.STAY;
          this.entity = entity;
 	}
 
-    public Action(Unit entity, Unit target) {
+    public StateAction(Unit entity, Unit target) {
         this();
         this.type = Type.ATTACK;
         this.entity = entity;
         this.target = target;
     }
 
-    public Action(Unit entity, Direction direction) {
+    public StateAction(Unit entity, Direction direction) {
         this();
         this.type = Type.MOVE;
         this.entity = entity;

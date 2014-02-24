@@ -16,18 +16,18 @@ public class State {
     private List<Unit> archers;
     
     // save the two actions that led to this state (one for each footman, or one for each archer)
-    private Action prevAction1;
-    private Action prevAction2;
+    private StateAction prevAction1;
+    private StateAction prevAction2;
     
     public State() {
-        this(new ArrayList<Unit>(), new ArrayList<Unit>(), new Action(), new Action());
+        this(new ArrayList<Unit>(), new ArrayList<Unit>(), new StateAction(), new StateAction());
     }
     
     public State(List<Unit> footmen, List<Unit> archers) {
-        this(footmen, archers, new Action(), new Action());
+        this(footmen, archers, new StateAction(), new StateAction());
     }
 
-    public State(List<Unit> footmen, List<Unit> archers, Action action1, Action action2) {
+    public State(List<Unit> footmen, List<Unit> archers, StateAction action1, StateAction action2) {
         this.footmen = new ArrayList<Unit>();
         this.footmen.addAll(footmen);
         this.archers = new ArrayList<Unit>();
@@ -36,7 +36,7 @@ public class State {
         this.prevAction2 = action2;
     }
 
-    public State(State state, Action action1, Action action2) {
+    public State(State state, StateAction action1, StateAction action2) {
 		this();
 		
 		prevAction1 = action1;
@@ -83,10 +83,10 @@ public class State {
         return sum;
     }
     
-    public Action getAction1() {
+    public StateAction getAction1() {
     	return prevAction1;
     }
-    public Action getAction2() {
+    public StateAction getAction2() {
     	return prevAction2;
     }
     
@@ -130,14 +130,14 @@ public class State {
         return distances.isEmpty() ? 0 : Collections.min(distances);
     }
     
-    public State getNextState(Action action1, Action action2) {
+    public State getNextState(StateAction action1, StateAction action2) {
     	State nextState = new State(this, action1, action2);
     	nextState.applyAction(action1);
     	nextState.applyAction(action2);
     	return nextState;
     }
 
-	private void applyAction(Action action) {
+	private void applyAction(StateAction action) {
 		Unit unit = action.getEntity();
 		
 		switch(action.getType()) {
@@ -154,7 +154,7 @@ public class State {
 		}
 	}
 
-	private void moveUnit(Action action, Unit unit) {
+	private void moveUnit(StateAction action, Unit unit) {
 		Unit stateUnit = getUnitFromID(unit.getId());
 		switch(action.getDirection()) {
 		case EAST:

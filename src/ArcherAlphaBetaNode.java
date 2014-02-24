@@ -19,48 +19,48 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
 
         List<Unit> archers = state.getArchers();
         
-        Map<Unit, List<Action>> actions = new HashMap<>();
+        Map<Unit, List<StateAction>> actions = new HashMap<>();
         
         for (Unit archer : archers) {
-        	actions.put(archer, new ArrayList<Action>());
+        	actions.put(archer, new ArrayList<StateAction>());
         	
         	int x = archer.getXPosition();
         	int y = archer.getYPosition();
         	
         	List<Unit> targetsInRange = targetsInRange(x, y, archer.getTemplateView().getRange());
         	for (Unit target : targetsInRange) {
-        		Action action = new Action(archer, target);
+        		StateAction action = new StateAction(archer, target);
         		actions.get(archer).add(action);
         	}
         	
         	if (isValidPosition(x + 1, y)) {
-        		Action action = new Action(archer, Direction.EAST);
+        		StateAction action = new StateAction(archer, Direction.EAST);
         		actions.get(archer).add(action);
         	}
         	
         	if (isValidPosition(x, y + 1)) {
-        		Action action = new Action(archer, Direction.NORTH);
+        		StateAction action = new StateAction(archer, Direction.NORTH);
         		actions.get(archer).add(action);
         	}
         	
         	if (isValidPosition(x - 1, y)) {
-        		Action action = new Action(archer, Direction.WEST);
+        		StateAction action = new StateAction(archer, Direction.WEST);
         		actions.get(archer).add(action);
         	}
         	
         	if (isValidPosition(x, y - 1)) {
-        		Action action = new Action(archer, Direction.SOUTH);
+        		StateAction action = new StateAction(archer, Direction.SOUTH);
         		actions.get(archer).add(action);
         	}
         }
         
-        for (Action archerOneAction : actions.get(archers.get(0))) {
+        for (StateAction archerOneAction : actions.get(archers.get(0))) {
         	if (archers.size() > 1) { // if there are two footmen left
-        		for (Action archerTwoAction : actions.get(archers.get(1))) {
+        		for (StateAction archerTwoAction : actions.get(archers.get(1))) {
         			states.add(state.getNextState(archerOneAction, archerTwoAction));
         		}
         	} else { // if there is only one footman left, add an empty action
-        		states.add(state.getNextState(archerOneAction, new Action()));
+        		states.add(state.getNextState(archerOneAction, new StateAction()));
         	}
         }
 
