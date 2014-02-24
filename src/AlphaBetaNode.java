@@ -62,6 +62,7 @@ public abstract class AlphaBetaNode extends Node {
         if (this.bestNode != null) {
             return;
         }
+        System.out.println("GENERATING TREE");
         List<State> possible = this.generatePossibleStates();
         this.generateChildren(possible);
         this.setBestNode();
@@ -76,6 +77,8 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     private void generateChildren(List<State> possible) {
+    	System.out.println("GENERATING CHILDREN");
+    	System.out.println("Using " + possible.size() + " states");
         while (!possible.isEmpty()) {
             // Create the node.
             State state = possible.remove(0);
@@ -106,25 +109,42 @@ public abstract class AlphaBetaNode extends Node {
         }
     }
 
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return True if the coordinates can be moved to
+     */
     protected boolean isValidPosition(int x, int y) {
         // Check boundaries.
+    	System.out.println("Checking if " + x + "," + y + " is valid position");
         if (x < State.Min[State.X] || y < State.Min[State.Y]) {
+        	System.out.println("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y]);
             return false;
         } else if (x >= State.Max[State.X] || y >= State.Max[State.Y]) {
+        	System.out.println("\tToo big for bounds " + State.Max[State.X] + "," + State.Max[State.Y]);
             return false;
         }
 
+        System.out.println("\tIn bounds, checking if anything is there");
         return !isAt(state.getEntities(), x, y);
     }
 
+    /**
+     * 
+     * @param entities
+     * @param x
+     * @param y
+     * @return True if there is an entity at the given coordinates
+     */
     protected boolean isAt(List<Unit> entities, int x, int y) {
         // Check if the coordinate is occupied.
         for (Unit e : entities) {
             if (x == e.getXPosition() && y == e.getYPosition()) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
     
     @Override

@@ -15,7 +15,8 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
-        List<State> states = new ArrayList<>();
+    	System.out.println("GENERATING ARCHER STATES");
+    	List<State> states = new ArrayList<>();
 
         List<Unit> archers = state.getArchers();
         
@@ -52,6 +53,10 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         		StateAction action = new StateAction(archer, Direction.SOUTH);
         		actions.get(archer).add(action);
         	}
+        }
+        
+        for (Unit archer : archers) {
+        	System.out.println("Generated " + actions.get(archer).size() + " actions for Archer " + archer.getId());
         }
         
         for (StateAction archerOneAction : actions.get(archers.get(0))) {

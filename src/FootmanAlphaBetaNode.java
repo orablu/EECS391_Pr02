@@ -15,6 +15,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
+    	System.out.println("GENERATING FOOTMAN STATES");
         List<State> states = new ArrayList<>();
 
         List<Unit> footmen = state.getFootmen();
@@ -34,24 +35,32 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         	}
         	
         	if (isValidPosition(x + 1, y)) {
+        		System.out.println("EAST IS VALID!");
         		StateAction action = new StateAction(footman, Direction.EAST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y + 1)) {
+        		System.out.println("NORTH IS VALID!");
         		StateAction action = new StateAction(footman, Direction.NORTH);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x - 1, y)) {
+        		System.out.println("WEST IS VALID!");
         		StateAction action = new StateAction(footman, Direction.WEST);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x, y - 1)) {
+        		System.out.println("SOUTH IS VALID!");
         		StateAction action = new StateAction(footman, Direction.SOUTH);
         		actions.get(footman).add(action);
         	}
+        }
+        
+        for (Unit footman : footmen) {
+        	System.out.println("Generated " + actions.get(footman).size() + " actions for Footman " + footman.getId());
         }
         
         for (StateAction fmanOneAction : actions.get(footmen.get(0))) {
