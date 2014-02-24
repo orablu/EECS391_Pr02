@@ -95,14 +95,14 @@ public abstract class AlphaBetaNode extends Node {
             int weight = node.getWeight();
             if (this.isMaxNode) {
                 if (weight < alpha) {
-                	System.out.println("---PRUNING!---");
+                	Log("---PRUNING!---");
                     break;
                 } else {
                     beta = Math.min(weight, beta);
                 }
             } else {
                 if (weight > beta) {
-                	System.out.println("---PRUNING!---");
+                	Log("---PRUNING!---");
                     break;
                 } else {
                     alpha = Math.max(weight, alpha);
