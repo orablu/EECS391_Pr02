@@ -35,25 +35,21 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
         	}
         	
         	if (isValidPosition(x + 1, y)) {
-        		System.out.println("EAST IS VALID!");
         		StateAction action = new StateAction(footman, Direction.EAST);
         		actions.get(footman).add(action);
         	}
         	
-        	if (isValidPosition(x, y + 1)) {
-        		System.out.println("NORTH IS VALID!");
+        	if (isValidPosition(x, y - 1)) {
         		StateAction action = new StateAction(footman, Direction.NORTH);
         		actions.get(footman).add(action);
         	}
         	
         	if (isValidPosition(x - 1, y)) {
-        		System.out.println("WEST IS VALID!");
         		StateAction action = new StateAction(footman, Direction.WEST);
         		actions.get(footman).add(action);
         	}
         	
-        	if (isValidPosition(x, y - 1)) {
-        		System.out.println("SOUTH IS VALID!");
+        	if (isValidPosition(x, y + 1)) {
         		StateAction action = new StateAction(footman, Direction.SOUTH);
         		actions.get(footman).add(action);
         	}

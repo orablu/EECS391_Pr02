@@ -39,7 +39,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         		actions.get(archer).add(action);
         	}
         	
-        	if (isValidPosition(x, y + 1)) {
+        	if (isValidPosition(x, y - 1)) {
         		StateAction action = new StateAction(archer, Direction.NORTH);
         		actions.get(archer).add(action);
         	}
@@ -49,7 +49,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         		actions.get(archer).add(action);
         	}
         	
-        	if (isValidPosition(x, y - 1)) {
+        	if (isValidPosition(x, y + 1)) {
         		StateAction action = new StateAction(archer, Direction.SOUTH);
         		actions.get(archer).add(action);
         	}

@@ -31,7 +31,6 @@ public class AlphaBetaLeaf extends Node {
     
     @Override
     public String toString() {
-    	String s = "Leaf with state: \n\t" + state + "\n";
-    	return s;
+    	return "Leaf with weight " + getWeight() + " and state: \n\t" + state + "\n";
     }
 }
