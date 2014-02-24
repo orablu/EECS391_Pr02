@@ -27,6 +27,7 @@ public abstract class AlphaBetaNode extends Node {
 
     public int getWeight() {
         if (this.weight == null) {
+            this.generateTree();
             this.weight = this.getBestNode().getWeight();
         }
         return this.weight;
@@ -45,6 +46,7 @@ public abstract class AlphaBetaNode extends Node {
 
     public Node getBestNode() {
         if (this.bestNode == null) {
+            this.generateTree();
             this.setBestNode();
         }
         return this.bestNode;
@@ -57,14 +59,16 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     // Create the node, creating any children nodes and pruning as necessary.
-    private void searchForBestNode() {
+    public void generateTree() {
+        if (this.bestNode != null) {
+            return;
+        }
         List<State> possible = this.generatePossibleStates();
         this.generateChildren(possible);
         this.setBestNode();
     }
 
     private void setBestNode() {
-        this.searchForBestNode();
         if (this.isMaxNode) {
             this.bestNode = this.getMaxChild();
         } else {

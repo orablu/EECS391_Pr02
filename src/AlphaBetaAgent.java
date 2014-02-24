@@ -72,7 +72,8 @@ public class AlphaBetaAgent extends Agent {
         AlphaBetaNode.setupSearch(treeDepth);
         State currentState = generateState(currentStateView);
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
-        List<Node> bestPath = searchSpace.getBestPath(); 
+        searchSpace.generateTree();
+
         
         return builder;
     }
