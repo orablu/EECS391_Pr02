@@ -1,6 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A node in a minimax tree that uses alpha beta pruning.
+ *
+ * @author wkr3, jxb532
+ */
 public abstract class AlphaBetaNode extends Node {
     private static int alpha, beta;
     private static int maxDepth;
@@ -10,12 +15,24 @@ public abstract class AlphaBetaNode extends Node {
     private Node bestNode;
     private Integer weight;
 
+    /**
+     * Sets up the search parameters to begin a new search.
+     *
+     * @param depth The maximum depth of any branch
+     */
     public static void setupSearch(int depth) {
         AlphaBetaNode.alpha = Integer.MIN_VALUE;
         AlphaBetaNode.beta = Integer.MAX_VALUE;
         AlphaBetaNode.maxDepth = depth;
     }
 
+    /**
+     * Creates a new AlphaBetaNode.
+     *
+     * @param state The state used to generate this node and its children
+     * @param depth The current depth of the node
+     * @param isMaxNode True if this is a node that should be maximized, otherwise false
+     */
     public AlphaBetaNode(State state, int depth, boolean isMaxNode) {
         super();
         this.state = state;
@@ -24,6 +41,10 @@ public abstract class AlphaBetaNode extends Node {
         this.weight = null;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see Node#getWeight()
+     */
     public int getWeight() {
         if (this.weight == null) {
             this.generateTree();
@@ -32,6 +53,11 @@ public abstract class AlphaBetaNode extends Node {
         return this.weight;
     }
 
+    /**
+     * Gets the actions taken to get to this node.
+     *
+     * @return A list containing all actions taken to create this node
+     */
     public List<StateAction> getActions() {
         List<StateAction> actions = new ArrayList<>();
         if (state.getAction1().getType() != StateAction.Type.UNDEFINED) {
@@ -43,6 +69,11 @@ public abstract class AlphaBetaNode extends Node {
         return actions;
     }
 
+    /**
+     * Gets the node's best child, based on weights.
+     *
+     * @return The best node found
+     */
     public Node getBestNode() {
         if (this.bestNode == null) {
             this.generateTree();
@@ -51,13 +82,19 @@ public abstract class AlphaBetaNode extends Node {
         return this.bestNode;
     }
 
+    /**
+     * {@inheritDoc}
+     * @see Node#getBestPath()
+     */
     public List<Node> getBestPath() {
         List<Node> bestPath = this.getBestNode().getBestPath();
         bestPath.add(0, this);
         return bestPath;
     }
 
-    // Create the node, creating any children nodes and pruning as necessary.
+    /**
+     * Create the node, creating any child nodes and pruning as necessary.
+     */
     public void generateTree() {
         if (this.bestNode != null) {
             return;
@@ -68,6 +105,10 @@ public abstract class AlphaBetaNode extends Node {
         this.setBestNode();
     }
 
+    /**
+     * Sets the best node out of this node's children.
+     *
+     */
     private void setBestNode() {
         if (this.isMaxNode) {
             this.bestNode = this.getMaxChild();
@@ -79,9 +120,14 @@ public abstract class AlphaBetaNode extends Node {
         Log("Set best " + s + " node with weight of: " + bestNode.getWeight(), Level.Low);
     }
 
+    /**
+     * Generates all the children for this node, stopping if pruning is necessary.
+     *
+     * @param possible The list of possible states to generate children from
+     */
     private void generateChildren(List<State> possible) {
-    	Log("GENERATING CHILDREN", Level.Low);
-    	Log("Using " + possible.size() + " states", Level.Low);
+        Log("GENERATING CHILDREN", Level.Low);
+        Log("Using " + possible.size() + " states", Level.Low);
         while (!possible.isEmpty()) {
             // Create the node.
             State state = possible.remove(0);
@@ -98,14 +144,14 @@ public abstract class AlphaBetaNode extends Node {
             int weight = node.getWeight();
             if (this.isMaxNode) {
                 if (weight < alpha) {
-                	Log("---PRUNING!---", Level.Low);
+                    Log("---PRUNING!---", Level.Low);
                     break;
                 } else {
                     beta = Math.min(weight, beta);
                 }
             } else {
                 if (weight > beta) {
-                	Log("---PRUNING!---", Level.Low);
+                    Log("---PRUNING!---", Level.Low);
                     break;
                 } else {
                     alpha = Math.max(weight, alpha);
@@ -115,19 +161,20 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     /**
+     * Returns whether the given position is valid to move to.
      * 
-     * @param x
-     * @param y
+     * @param x The x coordinate
+     * @param y The y coordinate
      * @return True if the coordinates can be moved to
      */
     protected boolean isValidPosition(int x, int y) {
         // Check boundaries.
-    	Log("Checking if " + x + "," + y + " is valid position", Level.Low);
+        Log("Checking if " + x + "," + y + " is valid position", Level.Low);
         if (x < State.Min[State.X] || y < State.Min[State.Y]) {
-        	Log("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y], Level.High);
+            Log("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y], Level.High);
             return false;
         } else if (x >= State.Max[State.X] || y >= State.Max[State.Y]) {
-        	Log("\tToo big for bounds " + State.Max[State.X] + "," + State.Max[State.Y], Level.High);
+            Log("\tToo big for bounds " + State.Max[State.X] + "," + State.Max[State.Y], Level.High);
             return false;
         }
 
@@ -136,10 +183,11 @@ public abstract class AlphaBetaNode extends Node {
     }
 
     /**
+     * Returns whether any of the given entities are at the given position.
      * 
-     * @param entities
-     * @param x
-     * @param y
+     * @param entities The entities to check for
+     * @param x The x coordinate
+     * @param y The y coordinate
      * @return True if there is an entity at the given coordinates
      */
     protected boolean isAt(List<Unit> entities, int x, int y) {
@@ -152,18 +200,37 @@ public abstract class AlphaBetaNode extends Node {
         return false;
     }
     
+    /**
+     * @return A string representing the node.
+     */
     @Override
     public String toString() {
-    	String mm = isMaxNode ? "Max" : "Min";
-    	String s = mm + " Node with state: \n\t" + state + "\n";
-    	s += "Depth: " + depth + "\n";
-    	return s;
+        String mm = isMaxNode ? "Max" : "Min";
+        String s = mm + " Node with state: \n\t" + state + "\n";
+        s += "Depth: " + depth + "\n";
+        return s;
     }
 
-    // Populates this.possibleStates from this node's state.
+    /**
+     * Populates this.possibleStates from this node's state.
+     *
+     * @return The generated states
+     */
     protected abstract List<State> generatePossibleStates();
 
-    // Returns the node/leaf created from the given state.
+    /**
+     * Creates a node from the given state.
+     *
+     * @param state The state to generate the node from
+     * @return A new node gnerated from the given state
+     */
     protected abstract AlphaBetaNode getChildFromState(State state);
+
+    /**
+     * Creates a leaf node from the given state.
+     *
+     * @param state The state to generate the leaf node from
+     * @return A new leaf node gnerated from the given state
+     */
     protected abstract AlphaBetaLeaf getLeafFromState(State state);
 }
