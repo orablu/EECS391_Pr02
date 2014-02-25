@@ -74,6 +74,9 @@ public abstract class AlphaBetaNode extends Node {
         } else {
             this.bestNode = this.getMinChild();
         }
+        
+        String s = isMaxNode ? "Max" : "Min";
+        Log("Set best " + s + " node with weight of: " + bestNode.getWeight(), Level.High);
     }
 
     private void generateChildren(List<State> possible) {
@@ -95,14 +98,14 @@ public abstract class AlphaBetaNode extends Node {
             int weight = node.getWeight();
             if (this.isMaxNode) {
                 if (weight < alpha) {
-                	Log("---PRUNING!---");
+                	Log("---PRUNING!---", Level.Low);
                     break;
                 } else {
                     beta = Math.min(weight, beta);
                 }
             } else {
                 if (weight > beta) {
-                	Log("---PRUNING!---");
+                	Log("---PRUNING!---", Level.Low);
                     break;
                 } else {
                     alpha = Math.max(weight, alpha);
@@ -151,7 +154,8 @@ public abstract class AlphaBetaNode extends Node {
     
     @Override
     public String toString() {
-    	String s = "Node with state: \n\t" + state + "\n";
+    	String mm = isMaxNode ? "Max" : "Min";
+    	String s = mm + " Node with state: \n\t" + state + "\n";
     	s += "Depth: " + depth + "\n";
     	return s;
     }

@@ -31,6 +31,7 @@ public class AlphaBetaLeaf extends Node {
     
     @Override
     public String toString() {
-    	return "Leaf with weight " + getWeight() + " and state: \n\t" + state + "\n";
+    	String s = isMaxNode ? "Max" : "Min";
+    	return s + " Leaf with weight " + getWeight() + " and state: \n\t" + state + "\n";
     }
 }
