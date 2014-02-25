@@ -52,6 +52,7 @@ public class AlphaBetaAgent extends Agent {
         if (arguments.length >= 1) {
             String depth = arguments[0];
             treeDepth = Integer.parseInt(depth);
+            treeDepth -= treeDepth % 2;
         }
     }
 

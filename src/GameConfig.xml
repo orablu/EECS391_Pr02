@@ -3,7 +3,7 @@
 	<Player Id="0">
 		<AgentClass>
 			<ClassName>AlphaBetaAgent</ClassName>
-			<Argument>4</Argument>
+			<Argument>8</Argument>
 		</AgentClass>
 	</Player>
 	<Player Id="0">

@@ -79,12 +79,6 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     protected AlphaBetaLeaf getLeafFromState(State state) {
         return new AlphaBetaLeaf(state, true);
     }
-
-    @Override
-    public List<Node> getBestPath() {
-        List<Node> bestPath = this.getBestNode().getBestPath();
-        return bestPath;
-    }
     
     private List<Unit> targetsInRange(int x, int y, int range) {
         List<Unit> targets = new ArrayList<>();
