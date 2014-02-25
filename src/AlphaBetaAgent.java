@@ -91,12 +91,19 @@ public class AlphaBetaAgent extends Agent {
         
         // Generate the search space and find the optimal path.
         AlphaBetaNode.setupSearch(treeDepth);
+        
+        // Create a state based on the current game layout
         State currentState = generateState(currentStateView);
+        
+        // Create the root node of the search tree using the current state
         AlphaBetaNode searchSpace = new FootmanAlphaBetaNode(currentState);
         Node.Log("CREATED INITIAL NODE: " + searchSpace, Node.Level.Low);
+        
+        // Find the next move by creating an alpha-beta pruned tree
         State nextState = searchSpace.getBestNode().getState();
         Node.Log("Found next state!", Node.Level.High);
 
+        // Print the best alpha-beta tree traversal
         List<Node> path = searchSpace.getBestNode().getBestPath();
         Node.Log("\nCurrent best path:");
         for (Node node : path) {
@@ -112,6 +119,7 @@ public class AlphaBetaAgent extends Agent {
         actions.add(nextState.getAction1());
         actions.add(nextState.getAction2());
         
+        // Apply the actions associated with the best move
         for (StateAction action : actions) {
         	Action move = null;
         	switch (action.getType()) {
@@ -134,6 +142,11 @@ public class AlphaBetaAgent extends Agent {
         return builder;
     }
 
+    /**
+     * Creates a state object based on the current gameboard
+     * @param currentStateView
+     * @return the state
+     */
     private State generateState(StateView currentStateView) {
         List<Integer> unitIds = currentStateView.getAllUnitIds();
         List<Integer> footmanIds = new ArrayList<Integer>();

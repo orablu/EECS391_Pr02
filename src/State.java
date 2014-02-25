@@ -57,6 +57,10 @@ public class State {
         }
     }
 
+    /**
+     * Gets all the units in the state (archers and footmen)
+     * @return a list of the units
+     */
     public List<Unit> getEntities() {
         List<Unit> entities = new ArrayList<>();
         entities.addAll(this.getFootmen());
@@ -64,14 +68,26 @@ public class State {
         return entities;
     }
 
+    /**
+     * Gets the footmen in the state
+     * @return a list of the footmen
+     */
     public List<Unit> getFootmen() {
         return footmen;
     }
     
+    /**
+     * Gets the archers in the state
+     * @return a list of the archers
+     */
     public List<Unit> getArchers() {
         return archers;
     }
 
+    /**
+     * 
+     * @return the sum of the footmen's health
+     */
     public int getFootmenHealth() {
         int sum = 0;
         for (Unit footman : footmen) {
@@ -81,6 +97,10 @@ public class State {
         return sum;
     }
 
+    /**
+     * 
+     * @return the sum of the archers' health
+     */
     public int getArcherHealth() {
         int sum = 0;
         for (Unit archer : archers) {
@@ -89,9 +109,17 @@ public class State {
         return sum;
     }
     
+    /**
+     * Gets the first action used to create this state
+     * @return the action
+     */
     public StateAction getAction1() {
         return prevAction1;
     }
+    /**
+     * Gets the second action used to create this state
+     * @return the action
+     */
     public StateAction getAction2() {
         return prevAction2;
     }
@@ -128,6 +156,11 @@ public class State {
         
     }
 
+    /**
+     * Calculates the nearest distance from the given unit to any archer
+     * @param entity
+     * @return the distance
+     */
     private int getNearestDistance(Unit entity) {
         int x = entity.getXPosition();
         int y = entity.getYPosition();
@@ -141,6 +174,12 @@ public class State {
         return distances.isEmpty() ? 0 : Collections.min(distances);
     }
     
+    /**
+     * Applies actions to a state and calculates the state after the actions
+     * @param action1
+     * @param action2
+     * @return the next state
+     */
     public State getNextState(StateAction action1, StateAction action2) {
         State nextState = new State(this, action1, action2);
         nextState.applyAction(action1);
@@ -148,16 +187,20 @@ public class State {
         return nextState;
     }
 
+    /**
+     * Applies a single action to a state
+     * @param action
+     */
     private void applyAction(StateAction action) {
         Unit unit = action.getEntity();
         
         switch(action.getType()) {
-        case ATTACK:
+        case ATTACK: // uses the base attack of the unit and applies it to the target unit's hp
             int damage = unit.isFootman() ? Unit.FOOTMAN_DAMAGE : Unit.ARCHER_DAMAGE;
             Unit targetUnit = getUnitFromID(action.getTarget().getId());
             targetUnit.setHP(targetUnit.getHP() - damage);
             break;
-        case MOVE:
+        case MOVE: // moves the given unit in the specified direction
             moveUnit(action, unit);
             break;
         default:
@@ -165,6 +208,12 @@ public class State {
         }
     }
 
+    /**
+     * Moves the given unit in a direction specified by the given action by 
+     * altering the unit's position in the state.
+     * @param action
+     * @param unit
+     */
     private void moveUnit(StateAction action, Unit unit) {
         Unit stateUnit = getUnitFromID(unit.getId());
         switch(action.getDirection()) {
@@ -186,6 +235,11 @@ public class State {
         }
     }
     
+    /**
+     * Finds the unit in the state given the unit's global id
+     * @param id
+     * @return the unit
+     */
     private Unit getUnitFromID(int id) {
         for (Unit footman : footmen) {
             if (footman.getId() == id) {
