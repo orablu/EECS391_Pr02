@@ -3,11 +3,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class State {
-    private static final double W_FOOTMAN_HP       = 0;
-    private static final double W_FOOTMAN_DISTANCE = -1;
-    private static final double W_ARCHER_HP        = -3;
-    private static final double W_FOOTMAN_ALIVE    = 0;
-    private static final double W_ARCHER_ALIVE     = 0;
+    private static final int W_FOOTMAN_HP       = 1;
+    private static final int W_FOOTMAN_DISTANCE = -1;
+    private static final int W_ARCHER_HP        = -10;
+    private static final int W_FOOTMAN_ALIVE    = 10;
+    private static final int W_ARCHER_ALIVE     = -100;
 
     public static final int X = 0;
     public static final int Y = 1;
@@ -154,8 +154,8 @@ public class State {
         switch(action.getType()) {
         case ATTACK:
             int damage = unit.isFootman() ? Unit.FOOTMAN_DAMAGE : Unit.ARCHER_DAMAGE;
-            Unit stateUnit = getUnitFromID(unit.getId());
-            stateUnit.setHP(stateUnit.getHP() - damage);
+            Unit targetUnit = getUnitFromID(action.getTarget().getId());
+            targetUnit.setHP(targetUnit.getHP() - damage);
             break;
         case MOVE:
             moveUnit(action, unit);

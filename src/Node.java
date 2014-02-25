@@ -8,7 +8,7 @@ public abstract class Node {
         private Level(int value) { this.value = value; }
         public int getValue() { return value; }
     }
-    public static Level Logging = Level.Moderate;
+    public static Level Logging = Level.Essential;
     public static void Log(String text) { Log(text, Level.Essential); }
     public static void Log(String text, Level level) {
         if (level.getValue() <= Logging.getValue()) {

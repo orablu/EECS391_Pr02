@@ -53,6 +53,9 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         		StateAction action = new StateAction(archer, Direction.SOUTH);
         		actions.get(archer).add(action);
         	}
+        	
+        	StateAction action = new StateAction(archer);
+        	actions.get(archer).add(action);
         }
         
         for (Unit archer : archers) {
@@ -78,12 +81,6 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
 
     protected AlphaBetaLeaf getLeafFromState(State state) {
         return new AlphaBetaLeaf(state, true);
-    }
-
-    @Override
-    public List<Node> getBestPath() {
-        List<Node> bestPath = this.getBestNode().getBestPath();
-        return bestPath;
     }
     
     private List<Unit> targetsInRange(int x, int y, int range) {
