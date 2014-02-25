@@ -53,6 +53,9 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
         		StateAction action = new StateAction(archer, Direction.SOUTH);
         		actions.get(archer).add(action);
         	}
+        	
+        	StateAction action = new StateAction(archer);
+        	actions.get(archer).add(action);
         }
         
         for (Unit archer : archers) {
