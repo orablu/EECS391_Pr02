@@ -15,7 +15,7 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
-    	Log("GENERATING ARCHER STATES", Level.Moderate);
+    	Log("GENERATING ARCHER STATES", Level.Low);
     	List<State> states = new ArrayList<>();
 
         List<Unit> archers = state.getArchers();

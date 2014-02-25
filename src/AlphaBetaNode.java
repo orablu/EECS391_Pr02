@@ -76,11 +76,11 @@ public abstract class AlphaBetaNode extends Node {
         }
         
         String s = isMaxNode ? "Max" : "Min";
-        Log("Set best " + s + " node with weight of: " + bestNode.getWeight(), Level.High);
+        Log("Set best " + s + " node with weight of: " + bestNode.getWeight(), Level.Low);
     }
 
     private void generateChildren(List<State> possible) {
-    	Log("GENERATING CHILDREN", Level.Moderate);
+    	Log("GENERATING CHILDREN", Level.Low);
     	Log("Using " + possible.size() + " states", Level.Low);
         while (!possible.isEmpty()) {
             // Create the node.
@@ -122,7 +122,7 @@ public abstract class AlphaBetaNode extends Node {
      */
     protected boolean isValidPosition(int x, int y) {
         // Check boundaries.
-    	Log("Checking if " + x + "," + y + " is valid position", Level.Moderate);
+    	Log("Checking if " + x + "," + y + " is valid position", Level.Low);
         if (x < State.Min[State.X] || y < State.Min[State.Y]) {
         	Log("\tToo small for bounds " + State.Min[State.X] + "," + State.Min[State.Y], Level.High);
             return false;
@@ -131,7 +131,7 @@ public abstract class AlphaBetaNode extends Node {
             return false;
         }
 
-        Log("\tIn bounds, checking if anything is there", Level.Moderate);
+        Log("\tIn bounds, checking if anything is there", Level.Low);
         return !isAt(state.getEntities(), x, y);
     }
 

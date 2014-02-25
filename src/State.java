@@ -5,7 +5,7 @@ import java.util.List;
 public class State {
     private static final double W_FOOTMAN_HP       = 0;
     private static final double W_FOOTMAN_DISTANCE = -1;
-    private static final double W_ARCHER_HP        = -1;
+    private static final double W_ARCHER_HP        = -3;
     private static final double W_FOOTMAN_ALIVE    = 0;
     private static final double W_ARCHER_ALIVE     = 0;
 

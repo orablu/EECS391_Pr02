@@ -15,7 +15,7 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
     }
 
     protected List<State> generatePossibleStates() {
-    	Log("GENERATING FOOTMAN STATES", Level.Moderate);
+    	Log("GENERATING FOOTMAN STATES", Level.Low);
         List<State> states = new ArrayList<>();
 
         List<Unit> footmen = state.getFootmen();
