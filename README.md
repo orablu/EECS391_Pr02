@@ -6,6 +6,5 @@ This is second programming assignment for Case Western Reserve University's EECS
 To run the assignment parts, execute the following:
 
 ```bat
-javac -cp "Sepia.jar" AlphaBetaAgent.java
-java -cp "Sepia.jar;." edu.cwru.sepia.Main2 AlphaBetaConfig.xml
+sh buildAlphaBetaGame.sh
 ```
