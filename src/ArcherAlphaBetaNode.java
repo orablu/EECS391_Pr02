@@ -74,8 +74,6 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
                 actions.get(archer).add(action);
             }
             
-            StateAction action = new StateAction(archer);
-            actions.get(archer).add(action);
         }
         
         for (Unit archer : archers) {
@@ -91,6 +89,16 @@ public class ArcherAlphaBetaNode extends AlphaBetaNode {
                 states.add(state.getNextState(archerOneAction, new StateAction()));
             }
         }
+        
+//        Collections.sort(states, new Comparator<State>() {
+//
+//			@Override
+//			public int compare(State o1, State o2) {
+//				int util1 = o1.getStateUtility();
+//				int util2 = o2.getStateUtility();
+//				return util1 < util2 ? -1 : util1 == util2 ? 0 : 1;
+//			}
+//		});
 
         return states;
     }

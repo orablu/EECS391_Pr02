@@ -88,6 +88,16 @@ public class FootmanAlphaBetaNode extends AlphaBetaNode {
                 states.add(state.getNextState(fmanOneAction, new StateAction()));
             }
         }
+        
+//        Collections.sort(states, new Comparator<State>() {
+//
+//			@Override
+//			public int compare(State o1, State o2) {
+//				int util1 = o1.getStateUtility();
+//				int util2 = o2.getStateUtility();
+//				return util1 < util2 ? 1 : util1 == util2 ? 0 : -1;
+//			}
+//		});
 
         return states;
     }
